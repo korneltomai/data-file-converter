@@ -1,5 +1,5 @@
 [project]
-name = "PySide Project"
+name = "File Converter App"
 
 [tool.pyside6-project]
-files = ["main.py"]
+files = ["app/app.py", "app/mainwindow.py", "app/mainwindow.ui", "app/resources.qrc"]
