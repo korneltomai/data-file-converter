@@ -19,13 +19,13 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLayout, QLineEdit,
     QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-import rc_resources
+import app.rc_resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(732, 421)
+        MainWindow.resize(732, 540)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -36,39 +36,65 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.sourceSelectionLabel = QLabel(self.centralwidget)
+        self.sourceSelectionLabel.setObjectName(u"sourceSelectionLabel")
+
+        self.verticalLayout.addWidget(self.sourceSelectionLabel)
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
-        self.selectionDisplay = QLineEdit(self.centralwidget)
-        self.selectionDisplay.setObjectName(u"selectionDisplay")
+        self.sourceSelectionDisplay = QLineEdit(self.centralwidget)
+        self.sourceSelectionDisplay.setObjectName(u"sourceSelectionDisplay")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.selectionDisplay.sizePolicy().hasHeightForWidth())
-        self.selectionDisplay.setSizePolicy(sizePolicy1)
-        self.selectionDisplay.setMinimumSize(QSize(400, 22))
-        self.selectionDisplay.setReadOnly(True)
+        sizePolicy1.setHeightForWidth(self.sourceSelectionDisplay.sizePolicy().hasHeightForWidth())
+        self.sourceSelectionDisplay.setSizePolicy(sizePolicy1)
+        self.sourceSelectionDisplay.setMinimumSize(QSize(400, 22))
+        self.sourceSelectionDisplay.setReadOnly(True)
 
-        self.horizontalLayout.addWidget(self.selectionDisplay)
+        self.horizontalLayout.addWidget(self.sourceSelectionDisplay)
 
-        self.selectFolderButton = QPushButton(self.centralwidget)
-        self.selectFolderButton.setObjectName(u"selectFolderButton")
+        self.selectSourceFolderButton = QPushButton(self.centralwidget)
+        self.selectSourceFolderButton.setObjectName(u"selectSourceFolderButton")
         icon = QIcon()
         icon.addFile(u":/icons/folder.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.selectFolderButton.setIcon(icon)
+        self.selectSourceFolderButton.setIcon(icon)
 
-        self.horizontalLayout.addWidget(self.selectFolderButton)
+        self.horizontalLayout.addWidget(self.selectSourceFolderButton)
 
-        self.selectFilesButton = QPushButton(self.centralwidget)
-        self.selectFilesButton.setObjectName(u"selectFilesButton")
+        self.selectSourceFilesButton = QPushButton(self.centralwidget)
+        self.selectSourceFilesButton.setObjectName(u"selectSourceFilesButton")
         icon1 = QIcon()
         icon1.addFile(u":/icons/files.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.selectFilesButton.setIcon(icon1)
+        self.selectSourceFilesButton.setIcon(icon1)
 
-        self.horizontalLayout.addWidget(self.selectFilesButton)
+        self.horizontalLayout.addWidget(self.selectSourceFilesButton)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
+
+        self.destinationSelectionLabel = QLabel(self.centralwidget)
+        self.destinationSelectionLabel.setObjectName(u"destinationSelectionLabel")
+
+        self.verticalLayout.addWidget(self.destinationSelectionLabel)
+
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.destinationFolderLineEdit = QLineEdit(self.centralwidget)
+        self.destinationFolderLineEdit.setObjectName(u"destinationFolderLineEdit")
+
+        self.horizontalLayout_6.addWidget(self.destinationFolderLineEdit)
+
+        self.selectDestinationFolderButton = QPushButton(self.centralwidget)
+        self.selectDestinationFolderButton.setObjectName(u"selectDestinationFolderButton")
+        self.selectDestinationFolderButton.setIcon(icon)
+
+        self.horizontalLayout_6.addWidget(self.selectDestinationFolderButton)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_6)
 
         self.line = QFrame(self.centralwidget)
         self.line.setObjectName(u"line")
@@ -124,11 +150,17 @@ class Ui_MainWindow(object):
         self.verticalLayout_3 = QVBoxLayout(self.backupSettingsGroupBox)
         self.verticalLayout_3.setSpacing(9)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.makeBackupCheckBox = QCheckBox(self.backupSettingsGroupBox)
-        self.makeBackupCheckBox.setObjectName(u"makeBackupCheckBox")
-        self.makeBackupCheckBox.setChecked(True)
+        self.overwriteCheckBox = QCheckBox(self.backupSettingsGroupBox)
+        self.overwriteCheckBox.setObjectName(u"overwriteCheckBox")
 
-        self.verticalLayout_3.addWidget(self.makeBackupCheckBox)
+        self.verticalLayout_3.addWidget(self.overwriteCheckBox)
+
+        self.backupCheckBox = QCheckBox(self.backupSettingsGroupBox)
+        self.backupCheckBox.setObjectName(u"backupCheckBox")
+        self.backupCheckBox.setEnabled(False)
+        self.backupCheckBox.setChecked(False)
+
+        self.verticalLayout_3.addWidget(self.backupCheckBox)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.MinimumExpanding)
 
@@ -147,18 +179,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setSpacing(6)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.backupPathLineEdit = QLineEdit(self.backupSettingsGroupBox)
-        self.backupPathLineEdit.setObjectName(u"backupPathLineEdit")
-        self.backupPathLineEdit.setEnabled(True)
-        sizePolicy1.setHeightForWidth(self.backupPathLineEdit.sizePolicy().hasHeightForWidth())
-        self.backupPathLineEdit.setSizePolicy(sizePolicy1)
-        self.backupPathLineEdit.setMinimumSize(QSize(400, 0))
+        self.backupFolderLineEdit = QLineEdit(self.backupSettingsGroupBox)
+        self.backupFolderLineEdit.setObjectName(u"backupFolderLineEdit")
+        self.backupFolderLineEdit.setEnabled(False)
+        sizePolicy1.setHeightForWidth(self.backupFolderLineEdit.sizePolicy().hasHeightForWidth())
+        self.backupFolderLineEdit.setSizePolicy(sizePolicy1)
+        self.backupFolderLineEdit.setMinimumSize(QSize(400, 0))
 
-        self.horizontalLayout_4.addWidget(self.backupPathLineEdit)
+        self.horizontalLayout_4.addWidget(self.backupFolderLineEdit)
 
         self.selectBackupFolderButton = QPushButton(self.backupSettingsGroupBox)
         self.selectBackupFolderButton.setObjectName(u"selectBackupFolderButton")
-        self.selectBackupFolderButton.setEnabled(True)
+        self.selectBackupFolderButton.setEnabled(False)
         self.selectBackupFolderButton.setIcon(icon)
 
         self.horizontalLayout_4.addWidget(self.selectBackupFolderButton)
@@ -256,9 +288,13 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.selectionDisplay.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No folder or files selected.", None))
-        self.selectFolderButton.setText(QCoreApplication.translate("MainWindow", u"Select folder", None))
-        self.selectFilesButton.setText(QCoreApplication.translate("MainWindow", u"Select file(s)", None))
+        self.sourceSelectionLabel.setText(QCoreApplication.translate("MainWindow", u"Select a folder or file(s) to convert: ", None))
+        self.sourceSelectionDisplay.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No source folder or files selected.", None))
+        self.selectSourceFolderButton.setText(QCoreApplication.translate("MainWindow", u"Select folder", None))
+        self.selectSourceFilesButton.setText(QCoreApplication.translate("MainWindow", u"Select file(s)", None))
+        self.destinationSelectionLabel.setText(QCoreApplication.translate("MainWindow", u"Select a destination folder:", None))
+        self.destinationFolderLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No destination folder selected.", None))
+        self.selectDestinationFolderButton.setText(QCoreApplication.translate("MainWindow", u"Select folder", None))
         self.folderSettingsGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Folder settings", None))
         self.includeSubFoldersCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include subfolders", None))
         self.includeAllCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include all supported types", None))
@@ -266,8 +302,9 @@ class Ui_MainWindow(object):
         self.includeXmlCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include XML files", None))
         self.includeYamlCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include YAML files", None))
         self.backupSettingsGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Backup settings", None))
-        self.makeBackupCheckBox.setText(QCoreApplication.translate("MainWindow", u"Make backup", None))
-        self.backupPathLabel.setText(QCoreApplication.translate("MainWindow", u"Backup path:", None))
+        self.overwriteCheckBox.setText(QCoreApplication.translate("MainWindow", u"Overwrite original files", None))
+        self.backupCheckBox.setText(QCoreApplication.translate("MainWindow", u"Make backup", None))
+        self.backupPathLabel.setText(QCoreApplication.translate("MainWindow", u"Backup folder:", None))
         self.selectBackupFolderButton.setText(QCoreApplication.translate("MainWindow", u"Select folder", None))
         self.conversionSettingsGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Conversion settings", None))
         self.convertToJsonRadioButton.setText(QCoreApplication.translate("MainWindow", u"Convert to JSON", None))

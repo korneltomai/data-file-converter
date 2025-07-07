@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>732</width>
-    <height>421</height>
+    <height>540</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,12 +25,19 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLabel" name="sourceSelectionLabel">
+      <property name="text">
+       <string>Select a folder or file(s) to convert: </string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="sizeConstraint">
        <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
       </property>
       <item>
-       <widget class="QLineEdit" name="selectionDisplay">
+       <widget class="QLineEdit" name="sourceSelectionDisplay">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -47,12 +54,12 @@
          <bool>true</bool>
         </property>
         <property name="placeholderText">
-         <string>No folder or files selected.</string>
+         <string>No source folder or files selected.</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="selectFolderButton">
+       <widget class="QPushButton" name="selectSourceFolderButton">
         <property name="text">
          <string>Select folder</string>
         </property>
@@ -63,13 +70,42 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="selectFilesButton">
+       <widget class="QPushButton" name="selectSourceFilesButton">
         <property name="text">
          <string>Select file(s)</string>
         </property>
         <property name="icon">
          <iconset resource="resources.qrc">
           <normaloff>:/icons/files.png</normaloff>:/icons/files.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="destinationSelectionLabel">
+      <property name="text">
+       <string>Select a destination folder:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLineEdit" name="destinationFolderLineEdit">
+        <property name="placeholderText">
+         <string>No destination folder selected.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="selectDestinationFolderButton">
+        <property name="text">
+         <string>Select folder</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/folder.png</normaloff>:/icons/folder.png</iconset>
         </property>
        </widget>
       </item>
@@ -162,12 +198,22 @@
           <number>9</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="makeBackupCheckBox">
+          <widget class="QCheckBox" name="overwriteCheckBox">
+           <property name="text">
+            <string>Overwrite original files</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="backupCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Make backup</string>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -196,7 +242,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Backup path:</string>
+            <string>Backup folder:</string>
            </property>
           </widget>
          </item>
@@ -206,9 +252,9 @@
             <number>6</number>
            </property>
            <item>
-            <widget class="QLineEdit" name="backupPathLineEdit">
+            <widget class="QLineEdit" name="backupFolderLineEdit">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -227,7 +273,7 @@
            <item>
             <widget class="QPushButton" name="selectBackupFolderButton">
              <property name="enabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="text">
               <string>Select folder</string>

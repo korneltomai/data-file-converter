@@ -2,4 +2,4 @@
 name = "File Converter App"
 
 [tool.pyside6-project]
-files = ["app/app.py", "app/mainwindow.py", "app/mainwindow.ui", "app/resources.qrc"]
+files = ["app/main.py", "app/mainwindow.py", "app/mainwindow.ui", "app/resources.qrc", "tests/test_mainwindow.py"]
