@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 17.0.0, 2025-07-07T02:08:52. -->
+<!-- Written by QtCreator 17.0.0, 2025-07-10T13:45:53. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -207,11 +207,9 @@
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">tests\test_mainwindow.py</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.</value>
      <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/Programming/Python/Projects/data-file-converter/tests/test_mainwindow.py</value>
-     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">false</value>
-     <value type="QString" key="PythonEditor.RunConfiguation.Script">D:\Programming\Python\Projects\data-file-converter\tests\test_mainwindow.py</value>
+     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-     <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Programming/Python/Projects/data-file-converter/tests</value>
     </valuemap>
     <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
      <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -277,7 +275,7 @@
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">app\main.py</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.</value>
      <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/Programming/Python/Projects/data-file-converter/app/main.py</value>
-     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">false</value>
+     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
      <value type="QString" key="PythonEditor.RunConfiguation.Script">D:\Programming\Python\Projects\data-file-converter\app\main.py</value>
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
@@ -367,11 +365,9 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">tests\test_mainwindow.py</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/Programming/Python/Projects/data-file-converter/tests/test_mainwindow.py</value>
-    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">false</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">D:\Programming\Python\Projects\data-file-converter\tests\test_mainwindow.py</value>
+    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Programming/Python/Projects/data-file-converter/tests</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.4">
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
@@ -437,7 +433,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">app\main.py</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/Programming/Python/Projects/data-file-converter/app/main.py</value>
-    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">false</value>
+    <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
     <value type="QString" key="PythonEditor.RunConfiguation.Script">D:\Programming\Python\Projects\data-file-converter\app\main.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>

@@ -20,20 +20,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selectDestinationFolderButton.clicked.connect(self.get_output_folder)
 
     def get_input_folder(self):
-        self.source_paths = self.show_file_dialog(folder_mode = True)
-        if self.source_paths:
+        result = self.show_file_dialog(folder_mode = True)
+        if result:
+            self.source_paths = result
             self.sourceSelectionDisplay.setText(self.source_paths[0])
 
     def get_input_files(self):
-        self.source_paths = self.show_file_dialog()
-        if self.source_paths:
+        result = self.show_file_dialog()
+        if result:
+            self.source_paths = result
             path, _ = os.path.split(self.source_paths[0])
             self.sourceSelectionDisplay.setText(f"{len(self.source_paths)} file(s) selected from '{path}'.")
 
     def get_output_folder(self):
-        destination_folder_list = self.show_file_dialog(folder_mode = True)
-        if destination_folder_list:
-            self.destination_folder = destination_folder_list[0]
+        result = self.show_file_dialog(folder_mode = True)
+        if result:
+            self.destination_folder = result[0]
             self.destinationFolderLineEdit.setText(self.destination_folder)
 
     def show_file_dialog(self, folder_mode = False):
