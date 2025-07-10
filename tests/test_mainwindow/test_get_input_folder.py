@@ -44,3 +44,16 @@ class TestGetInputFolder:
 
         assert window.source_paths == ["C:/Folder/Data/Sample"]
         assert window.sourceSelectionDisplay.text() == "C:/Folder/Data/Sample"
+
+    def test_enables_folder_settings(self, qtbot, mocker):
+        window = MainWindow()
+        qtbot.addWidget(window)
+
+        mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
+        mock_dialog.return_value = ["C:/Folder/Data/Sample"]
+
+        window.folderSettingsGroupBox.setEnabled(False)
+
+        window.selectSourceFolderButton.click()
+
+        assert window.folderSettingsGroupBox.isEnabled() == True
