@@ -8,7 +8,7 @@ from app.mainwindow import MainWindow
 
 class TestOverwriteState:
 
-    def test_initial_states(self, qtbot):
+    def test_state_toggle(self, qtbot):
         window = MainWindow()
         qtbot.addWidget(window)
 
@@ -16,17 +16,29 @@ class TestOverwriteState:
         assert window.destinationFolderLineEdit.isEnabled() == True
         assert window.selectDestinationFolderButton.isEnabled() == True
 
-    @pytest.mark.parametrize("checked, expected_states", [
-        (True, [True, False, False]),
-        (False, [False, True, True])
-    ])
+        window.overwriteCheckBox.setChecked(True)
 
-    def test_state_toggle(self, qtbot, checked, expected_states):
+        assert window.backupCheckBox.isEnabled() == True
+        assert window.destinationFolderLineEdit.isEnabled() == False
+        assert window.selectDestinationFolderButton.isEnabled() == False
+
+        window.overwriteCheckBox.setChecked(False)
+
+        assert window.backupCheckBox.isEnabled() == False
+        assert window.destinationFolderLineEdit.isEnabled() == True
+        assert window.selectDestinationFolderButton.isEnabled() == True
+
+    def test_disable_backup_selection(self, qtbot):
         window = MainWindow()
         qtbot.addWidget(window)
 
-        window.overwriteCheckBox.setChecked(checked)
+        window.overwriteCheckBox.setChecked(True)
+        window.backupCheckBox.setChecked(True)
 
-        assert window.backupCheckBox.isEnabled() == expected_states[0]
-        assert window.destinationFolderLineEdit.isEnabled() == expected_states[1]
-        assert window.selectDestinationFolderButton.isEnabled() == expected_states[2]
+        assert window.backupFolderLineEdit.isEnabled() == True
+        assert window.selectBackupFolderButton.isEnabled() == True
+
+        window.overwriteCheckBox.setChecked(False)
+
+        assert window.backupFolderLineEdit.isEnabled() == False
+        assert window.selectBackupFolderButton.isEnabled() == False

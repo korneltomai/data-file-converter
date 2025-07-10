@@ -40,6 +40,9 @@ class TestGetOutputFolder:
         window.destination_folder = "C:/Folder/Data/Sample"
         window.destinationFolderLineEdit.setText("C:/Folder/Data/Sample")
 
+        assert window.destination_folder == "C:/Folder/Data/Sample"
+        assert window.destinationFolderLineEdit.text() == "C:/Folder/Data/Sample"
+
         window.selectDestinationFolderButton.click()
 
         assert window.destination_folder == "C:/Folder/Data/Sample"

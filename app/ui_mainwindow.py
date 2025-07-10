@@ -84,6 +84,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.destinationFolderLineEdit = QLineEdit(self.centralwidget)
         self.destinationFolderLineEdit.setObjectName(u"destinationFolderLineEdit")
+        self.destinationFolderLineEdit.setReadOnly(True)
 
         self.horizontalLayout_6.addWidget(self.destinationFolderLineEdit)
 
@@ -185,6 +186,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.backupFolderLineEdit.sizePolicy().hasHeightForWidth())
         self.backupFolderLineEdit.setSizePolicy(sizePolicy1)
         self.backupFolderLineEdit.setMinimumSize(QSize(400, 0))
+        self.backupFolderLineEdit.setReadOnly(True)
 
         self.horizontalLayout_4.addWidget(self.backupFolderLineEdit)
 

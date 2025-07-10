@@ -10,6 +10,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+        self.source_paths = []
         self.destination_folder = f"{QDir.currentPath()}/output"
         self.destinationFolderLineEdit.setText(self.destination_folder)
         self.backup_folder = f"{QDir.currentPath()}/backups"
@@ -18,7 +19,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selectSourceFolderButton.clicked.connect(self.get_input_folder)
         self.selectSourceFilesButton.clicked.connect(self.get_input_files)
         self.selectDestinationFolderButton.clicked.connect(self.get_output_folder)
-        self.overwriteCheckBox.checkStateChanged.connect(self.changeOverwriteState)
+        self.overwriteCheckBox.checkStateChanged.connect(self.change_overwrite_tate)
+        self.backupCheckBox.checkStateChanged.connect(self.change_backup_state)
+        self.selectBackupFolderButton.clicked.connect(self.get_backup_folder)
 
     def get_input_folder(self):
         result = self.show_file_dialog(folder_mode = True)
@@ -41,6 +44,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.destination_folder = result[0]
             self.destinationFolderLineEdit.setText(self.destination_folder)
 
+    def get_backup_folder(self):
+        result = self.show_file_dialog(folder_mode = True)
+        if result:
+            self.backup_folder = result[0]
+            self.backupFolderLineEdit.setText(self.backup_folder)
+
     def show_file_dialog(self, folder_mode = False):
         dialog = QFileDialog(self)
         dialog.setViewMode(QFileDialog.Detail)
@@ -54,13 +63,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec():
             return dialog.selectedFiles()
 
-    def changeOverwriteState(self, state):
+    def change_overwrite_tate(self, state):
         if state == Qt.Unchecked:
+            if self.backupCheckBox.isEnabled():
+                self.backupFolderLineEdit.setEnabled(False)
+                self.selectBackupFolderButton.setEnabled(False)
             self.backupCheckBox.setEnabled(False)
             self.destinationFolderLineEdit.setEnabled(True)
             self.selectDestinationFolderButton.setEnabled(True)
+
         elif state == Qt.Checked:
+            if self.backupCheckBox.isChecked():
+                self.backupFolderLineEdit.setEnabled(True)
+                self.selectBackupFolderButton.setEnabled(True)
             self.backupCheckBox.setEnabled(True)
             self.destinationFolderLineEdit.setEnabled(False)
             self.selectDestinationFolderButton.setEnabled(False)
+
+    def change_backup_state(self, state):
+        if state == Qt.Unchecked:
+            self.backupFolderLineEdit.setEnabled(False)
+            self.selectBackupFolderButton.setEnabled(False)
+        elif state == Qt.Checked:
+            self.backupFolderLineEdit.setEnabled(True)
+            self.selectBackupFolderButton.setEnabled(True)
 

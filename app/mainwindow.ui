@@ -93,6 +93,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <item>
        <widget class="QLineEdit" name="destinationFolderLineEdit">
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
         <property name="placeholderText">
          <string>No destination folder selected.</string>
         </property>
@@ -267,6 +270,9 @@
                <width>400</width>
                <height>0</height>
               </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

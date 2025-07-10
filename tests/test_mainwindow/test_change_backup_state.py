@@ -1,0 +1,26 @@
+# This Python file uses the following encoding: utf-8
+
+import sys, os
+sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../.."))
+
+import pytest
+from app.mainwindow import MainWindow
+
+class TestChangeBackupState:
+
+    def test_state_toggle(self, qtbot):
+        window = MainWindow()
+        qtbot.addWidget(window)
+
+        assert window.backupFolderLineEdit.isEnabled() == False
+        assert window.selectBackupFolderButton.isEnabled() == False
+
+        window.backupCheckBox.setChecked(True)
+
+        assert window.backupFolderLineEdit.isEnabled() == True
+        assert window.selectBackupFolderButton.isEnabled() == True
+
+        window.backupCheckBox.setChecked(False)
+
+        assert window.backupFolderLineEdit.isEnabled() == False
+        assert window.selectBackupFolderButton.isEnabled() == False

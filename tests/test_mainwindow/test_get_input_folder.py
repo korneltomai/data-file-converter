@@ -6,6 +6,7 @@ sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../.."))
 from app.mainwindow import MainWindow
 
 class TestGetInputFolder:
+
     def test_opens_selection_dialog(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
@@ -38,6 +39,9 @@ class TestGetInputFolder:
 
         window.source_paths = ["C:/Folder/Data/Sample"]
         window.sourceSelectionDisplay.setText("C:/Folder/Data/Sample")
+
+        assert window.source_paths == ["C:/Folder/Data/Sample"]
+        assert window.sourceSelectionDisplay.text() == "C:/Folder/Data/Sample"
 
         window.selectSourceFolderButton.click()
 
