@@ -29,6 +29,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.source_paths = result
             self.sourceSelectionDisplay.setText(self.source_paths[0])
             self.folderSettingsGroupBox.setEnabled(True)
+            self.backupSettingsGroupBox.setEnabled(True)
 
     def get_input_files(self):
         result = self.show_file_dialog()
@@ -37,6 +38,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             path, _ = os.path.split(self.source_paths[0])
             self.sourceSelectionDisplay.setText(f"{len(self.source_paths)} file(s) selected from '{path}'.")
             self.folderSettingsGroupBox.setEnabled(False)
+            self.backupSettingsGroupBox.setEnabled(True)
 
     def get_output_folder(self):
         result = self.show_file_dialog(folder_mode = True)

@@ -40,9 +40,6 @@ class TestGetInputFiles:
         window.source_paths = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
         window.sourceSelectionDisplay.setText("3 file(s) selected from 'C:/Folder/Data/Test'.")
 
-        assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
-        assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
-
         window.get_input_files()
 
         assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
@@ -60,3 +57,16 @@ class TestGetInputFiles:
         window.get_input_files()
 
         assert window.folderSettingsGroupBox.isEnabled() == False
+
+    def test_enables_backup_settings(self, qtbot, mocker):
+        window = MainWindow()
+        qtbot.addWidget(window)
+
+        mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
+        mock_dialog.return_value = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
+
+        window.backupSettingsGroupBox.setEnabled(False)
+
+        window.get_input_files()
+
+        assert window.backupSettingsGroupBox.isEnabled() == True

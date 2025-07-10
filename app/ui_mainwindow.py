@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLayout, QLineEdit,
     QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-import app.rc_resources
+import rc_resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -148,6 +148,7 @@ class Ui_MainWindow(object):
 
         self.backupSettingsGroupBox = QGroupBox(self.centralwidget)
         self.backupSettingsGroupBox.setObjectName(u"backupSettingsGroupBox")
+        self.backupSettingsGroupBox.setEnabled(False)
         self.verticalLayout_3 = QVBoxLayout(self.backupSettingsGroupBox)
         self.verticalLayout_3.setSpacing(9)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")

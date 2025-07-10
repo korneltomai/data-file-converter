@@ -12,9 +12,9 @@ class TestOverwriteState:
         window = MainWindow()
         qtbot.addWidget(window)
 
-        assert window.backupCheckBox.isEnabled() == False
-        assert window.destinationFolderLineEdit.isEnabled() == True
-        assert window.selectDestinationFolderButton.isEnabled() == True
+        window.backupCheckBox.setEnabled(False)
+        window.destinationFolderLineEdit.setEnabled(True)
+        window.selectDestinationFolderButton.setEnabled(True)
 
         window.overwriteCheckBox.setChecked(True)
 

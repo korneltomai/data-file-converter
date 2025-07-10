@@ -41,9 +41,6 @@ class TestGetBackupFolder:
         window.backup_folder = "C:/Folder/Data/Sample"
         window.backupFolderLineEdit.setText("C:/Folder/Data/Sample")
 
-        assert window.backup_folder == "C:/Folder/Data/Sample"
-        assert window.backupFolderLineEdit.text() == "C:/Folder/Data/Sample"
-
         window.get_backup_folder()
 
         assert window.backup_folder == "C:/Folder/Data/Sample"
