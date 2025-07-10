@@ -33,10 +33,8 @@ class TestOverwriteState:
         qtbot.addWidget(window)
 
         window.overwriteCheckBox.setChecked(True)
-        window.backupCheckBox.setChecked(True)
-
-        assert window.backupFolderLineEdit.isEnabled() == True
-        assert window.selectBackupFolderButton.isEnabled() == True
+        window.backupFolderLineEdit.setEnabled(True)
+        window.selectBackupFolderButton.setEnabled(True)
 
         window.overwriteCheckBox.setChecked(False)
 

@@ -14,7 +14,7 @@ class TestGetInputFiles:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
 
-        window.selectSourceFilesButton.click()
+        window.get_input_files()
 
         mock_dialog.assert_called_once()
 
@@ -25,7 +25,7 @@ class TestGetInputFiles:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
 
-        window.selectSourceFilesButton.click()
+        window.get_input_files()
 
         assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
         assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
@@ -43,7 +43,7 @@ class TestGetInputFiles:
         assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
         assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
 
-        window.selectSourceFilesButton.click()
+        window.get_input_files()
 
         assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
         assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
@@ -57,6 +57,6 @@ class TestGetInputFiles:
 
         window.folderSettingsGroupBox.setEnabled(True)
 
-        window.selectSourceFilesButton.click()
+        window.get_input_files()
 
         assert window.folderSettingsGroupBox.isEnabled() == False

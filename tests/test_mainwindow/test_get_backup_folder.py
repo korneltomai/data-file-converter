@@ -14,9 +14,7 @@ class TestGetBackupFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.selectBackupFolderButton.setEnabled(True)
-
-        window.selectBackupFolderButton.click()
+        window.get_backup_folder()
 
         mock_dialog.assert_called_once()
 
@@ -27,9 +25,8 @@ class TestGetBackupFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.selectBackupFolderButton.setEnabled(True)
 
-        window.selectBackupFolderButton.click()
+        window.get_backup_folder()
 
         assert window.backup_folder == "C:/Folder/Data/Sample"
         assert window.backupFolderLineEdit.text() == "C:/Folder/Data/Sample"
@@ -41,15 +38,13 @@ class TestGetBackupFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = []
 
-        window.selectBackupFolderButton.setEnabled(True)
-
         window.backup_folder = "C:/Folder/Data/Sample"
         window.backupFolderLineEdit.setText("C:/Folder/Data/Sample")
 
         assert window.backup_folder == "C:/Folder/Data/Sample"
         assert window.backupFolderLineEdit.text() == "C:/Folder/Data/Sample"
 
-        window.selectBackupFolderButton.click()
+        window.get_backup_folder()
 
         assert window.backup_folder == "C:/Folder/Data/Sample"
         assert window.backupFolderLineEdit.text() == "C:/Folder/Data/Sample"

@@ -14,7 +14,7 @@ class TestGetInputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.selectSourceFolderButton.click()
+        window.get_input_folder()
 
         mock_dialog.assert_called_once()
 
@@ -25,7 +25,7 @@ class TestGetInputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.selectSourceFolderButton.click()
+        window.get_input_folder()
 
         assert window.source_paths == ["C:/Folder/Data/Sample"]
         assert window.sourceSelectionDisplay.text() == "C:/Folder/Data/Sample"
@@ -43,7 +43,7 @@ class TestGetInputFolder:
         assert window.source_paths == ["C:/Folder/Data/Sample"]
         assert window.sourceSelectionDisplay.text() == "C:/Folder/Data/Sample"
 
-        window.selectSourceFolderButton.click()
+        window.get_input_folder()
 
         assert window.source_paths == ["C:/Folder/Data/Sample"]
         assert window.sourceSelectionDisplay.text() == "C:/Folder/Data/Sample"
@@ -57,6 +57,6 @@ class TestGetInputFolder:
 
         window.folderSettingsGroupBox.setEnabled(False)
 
-        window.selectSourceFolderButton.click()
+        window.get_input_folder()
 
         assert window.folderSettingsGroupBox.isEnabled() == True

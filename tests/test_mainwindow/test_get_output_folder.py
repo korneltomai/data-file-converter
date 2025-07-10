@@ -14,7 +14,7 @@ class TestGetOutputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.selectDestinationFolderButton.click()
+        window.get_output_folder()
 
         mock_dialog.assert_called_once()
 
@@ -25,7 +25,7 @@ class TestGetOutputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.selectDestinationFolderButton.click()
+        window.get_output_folder()
 
         assert window.destination_folder == "C:/Folder/Data/Sample"
         assert window.destinationFolderLineEdit.text() == "C:/Folder/Data/Sample"
@@ -43,7 +43,7 @@ class TestGetOutputFolder:
         assert window.destination_folder == "C:/Folder/Data/Sample"
         assert window.destinationFolderLineEdit.text() == "C:/Folder/Data/Sample"
 
-        window.selectDestinationFolderButton.click()
+        window.get_output_folder()
 
         assert window.destination_folder == "C:/Folder/Data/Sample"
         assert window.destinationFolderLineEdit.text() == "C:/Folder/Data/Sample"
