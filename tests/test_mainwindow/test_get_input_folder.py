@@ -3,7 +3,6 @@
 import sys, os
 sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../.."))
 
-import pytest
 from app.mainwindow import MainWindow
 
 class TestGetInputFolder:
