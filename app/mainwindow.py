@@ -12,7 +12,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.destination_folder = f"{QDir.currentPath()}/output"
         self.destinationFolderLineEdit.setText(self.destination_folder)
-        self.backup_folder = "{QDir.currentPath()}/backups"
+        self.backup_folder = f"{QDir.currentPath()}/backups"
         self.backupFolderLineEdit.setText(self.backup_folder)
 
         self.selectSourceFolderButton.clicked.connect(self.get_input_folder)
