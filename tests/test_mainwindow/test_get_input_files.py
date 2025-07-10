@@ -3,6 +3,7 @@
 import sys, os
 sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../.."))
 
+from PySide6.QtCore import Qt
 from app.mainwindow import MainWindow
 
 class TestGetInputFiles:
@@ -45,7 +46,7 @@ class TestGetInputFiles:
         assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
         assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
 
-    def test_disenables_folder_settings(self, qtbot, mocker):
+    def test_disables_folder_settings(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 

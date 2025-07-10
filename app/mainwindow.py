@@ -1,7 +1,7 @@
 import os
 
 from PySide6.QtWidgets import QMainWindow, QFileDialog
-from PySide6.QtCore import QDir
+from PySide6.QtCore import QDir, Qt
 
 from app.ui_mainwindow import Ui_MainWindow
 
@@ -18,6 +18,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selectSourceFolderButton.clicked.connect(self.get_input_folder)
         self.selectSourceFilesButton.clicked.connect(self.get_input_files)
         self.selectDestinationFolderButton.clicked.connect(self.get_output_folder)
+        self.overwriteCheckBox.checkStateChanged.connect(self.changeOverwriteState)
 
     def get_input_folder(self):
         result = self.show_file_dialog(folder_mode = True)
@@ -53,4 +54,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec():
             return dialog.selectedFiles()
 
+    def changeOverwriteState(self, state):
+        if state == Qt.Unchecked:
+            self.backupCheckBox.setEnabled(False)
+            self.destinationFolderLineEdit.setEnabled(True)
+            self.selectDestinationFolderButton.setEnabled(True)
+        elif state == Qt.Checked:
+            self.backupCheckBox.setEnabled(True)
+            self.destinationFolderLineEdit.setEnabled(False)
+            self.selectDestinationFolderButton.setEnabled(False)
 
