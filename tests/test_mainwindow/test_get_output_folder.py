@@ -7,7 +7,7 @@ from app.mainwindow import MainWindow
 
 class TestGetOutputFolder:
 
-    def test_sets_destination_folder(self, qtbot, mocker):
+    def test_opens_selection_dialog(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 
@@ -17,6 +17,16 @@ class TestGetOutputFolder:
         window.selectDestinationFolderButton.click()
 
         mock_dialog.assert_called_once()
+
+    def test_sets_destination_folder(self, qtbot, mocker):
+        window = MainWindow()
+        qtbot.addWidget(window)
+
+        mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
+        mock_dialog.return_value = ["C:/Folder/Data/Sample"]
+
+        window.selectDestinationFolderButton.click()
+
         assert window.destination_folder == "C:/Folder/Data/Sample"
         assert window.destinationFolderLineEdit.text() == "C:/Folder/Data/Sample"
 
@@ -32,6 +42,5 @@ class TestGetOutputFolder:
 
         window.selectDestinationFolderButton.click()
 
-        mock_dialog.assert_called_once()
         assert window.destination_folder == "C:/Folder/Data/Sample"
         assert window.destinationFolderLineEdit.text() == "C:/Folder/Data/Sample"
