@@ -127,8 +127,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.includeJsonCheckBox.setEnabled(False)
             self.includeXmlCheckBox.setEnabled(False)
             self.includeYamlCheckBox.setEnabled(False)
+
+            self.includedFileTypes = [".json", ".xml", ".yaml", ".yml"]
         else:
             self.includeJsonCheckBox.setEnabled(True)
             self.includeXmlCheckBox.setEnabled(True)
             self.includeYamlCheckBox.setEnabled(True)
+
+            self.includedFileTypes = []
+            if self.includeJsonCheckBox.isChecked():
+                self.includedFileTypes.append(".json")
+            if self.includeXmlCheckBox.isChecked():
+                self.includedFileTypes.append(".xml")
+            if self.includeYamlCheckBox.isChecked():
+                self.includedFileTypes.extend((".yaml", ".yml"))
+
 
