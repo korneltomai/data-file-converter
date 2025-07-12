@@ -12,17 +12,18 @@ class TestOverwriteState:
         window = MainWindow()
         qtbot.addWidget(window)
 
+        window.backupSettingsGroupBox.setEnabled(True)
         window.backupCheckBox.setEnabled(False)
         window.destinationFolderLineEdit.setEnabled(True)
         window.selectDestinationFolderButton.setEnabled(True)
 
-        window.overwriteCheckBox.setChecked(True)
+        window.handle_overwrite_state_changed(True)
 
         assert window.backupCheckBox.isEnabled() == True
         assert window.destinationFolderLineEdit.isEnabled() == False
         assert window.selectDestinationFolderButton.isEnabled() == False
 
-        window.overwriteCheckBox.setChecked(False)
+        window.handle_overwrite_state_changed(False)
 
         assert window.backupCheckBox.isEnabled() == False
         assert window.destinationFolderLineEdit.isEnabled() == True
@@ -32,11 +33,12 @@ class TestOverwriteState:
         window = MainWindow()
         qtbot.addWidget(window)
 
+        window.backupSettingsGroupBox.setEnabled(True)
         window.overwriteCheckBox.setChecked(True)
         window.backupFolderLineEdit.setEnabled(True)
         window.selectBackupFolderButton.setEnabled(True)
 
-        window.overwriteCheckBox.setChecked(False)
+        window.handle_overwrite_state_changed(False)
 
         assert window.backupFolderLineEdit.isEnabled() == False
         assert window.selectBackupFolderButton.isEnabled() == False

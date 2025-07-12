@@ -12,15 +12,16 @@ class TestChangeBackupState:
         window = MainWindow()
         qtbot.addWidget(window)
 
+        window.backupSettingsGroupBox.setEnabled(True)
         window.backupFolderLineEdit.setEnabled(False)
         window.selectBackupFolderButton.setEnabled(False)
 
-        window.backupCheckBox.setChecked(True)
+        window.handle_backup_state_changed(True)
 
         assert window.backupFolderLineEdit.isEnabled() == True
         assert window.selectBackupFolderButton.isEnabled() == True
 
-        window.backupCheckBox.setChecked(False)
+        window.handle_backup_state_changed(False)
 
         assert window.backupFolderLineEdit.isEnabled() == False
         assert window.selectBackupFolderButton.isEnabled() == False
