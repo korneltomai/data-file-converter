@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLayout, QLineEdit,
     QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-import rc_resources
+import app.rc_resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -108,38 +108,43 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.folderSettingsGroupBox = QGroupBox(self.centralwidget)
         self.folderSettingsGroupBox.setObjectName(u"folderSettingsGroupBox")
-        self.folderSettingsGroupBox.setEnabled(False)
+        self.folderSettingsGroupBox.setEnabled(True)
         self.folderSettingsGroupBox.setFlat(False)
         self.folderSettingsGroupBox.setCheckable(False)
         self.verticalLayout_2 = QVBoxLayout(self.folderSettingsGroupBox)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.includeSubFoldersCheckBox = QCheckBox(self.folderSettingsGroupBox)
-        self.includeSubFoldersCheckBox.setObjectName(u"includeSubFoldersCheckBox")
-        self.includeSubFoldersCheckBox.setChecked(True)
+        self.includeSubfoldersCheckBox = QCheckBox(self.folderSettingsGroupBox)
+        self.includeSubfoldersCheckBox.setObjectName(u"includeSubfoldersCheckBox")
+        self.includeSubfoldersCheckBox.setEnabled(False)
+        self.includeSubfoldersCheckBox.setChecked(True)
 
-        self.verticalLayout_2.addWidget(self.includeSubFoldersCheckBox)
+        self.verticalLayout_2.addWidget(self.includeSubfoldersCheckBox)
 
         self.includeAllCheckBox = QCheckBox(self.folderSettingsGroupBox)
         self.includeAllCheckBox.setObjectName(u"includeAllCheckBox")
+        self.includeAllCheckBox.setEnabled(False)
         self.includeAllCheckBox.setChecked(True)
 
         self.verticalLayout_2.addWidget(self.includeAllCheckBox)
 
         self.includeJsonCheckBox = QCheckBox(self.folderSettingsGroupBox)
         self.includeJsonCheckBox.setObjectName(u"includeJsonCheckBox")
-        self.includeJsonCheckBox.setChecked(True)
+        self.includeJsonCheckBox.setEnabled(False)
+        self.includeJsonCheckBox.setChecked(False)
 
         self.verticalLayout_2.addWidget(self.includeJsonCheckBox)
 
         self.includeXmlCheckBox = QCheckBox(self.folderSettingsGroupBox)
         self.includeXmlCheckBox.setObjectName(u"includeXmlCheckBox")
-        self.includeXmlCheckBox.setChecked(True)
+        self.includeXmlCheckBox.setEnabled(False)
+        self.includeXmlCheckBox.setChecked(False)
 
         self.verticalLayout_2.addWidget(self.includeXmlCheckBox)
 
         self.includeYamlCheckBox = QCheckBox(self.folderSettingsGroupBox)
         self.includeYamlCheckBox.setObjectName(u"includeYamlCheckBox")
-        self.includeYamlCheckBox.setChecked(True)
+        self.includeYamlCheckBox.setEnabled(False)
+        self.includeYamlCheckBox.setChecked(False)
 
         self.verticalLayout_2.addWidget(self.includeYamlCheckBox)
 
@@ -148,12 +153,13 @@ class Ui_MainWindow(object):
 
         self.backupSettingsGroupBox = QGroupBox(self.centralwidget)
         self.backupSettingsGroupBox.setObjectName(u"backupSettingsGroupBox")
-        self.backupSettingsGroupBox.setEnabled(False)
+        self.backupSettingsGroupBox.setEnabled(True)
         self.verticalLayout_3 = QVBoxLayout(self.backupSettingsGroupBox)
         self.verticalLayout_3.setSpacing(9)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.overwriteCheckBox = QCheckBox(self.backupSettingsGroupBox)
         self.overwriteCheckBox.setObjectName(u"overwriteCheckBox")
+        self.overwriteCheckBox.setEnabled(False)
 
         self.verticalLayout_3.addWidget(self.overwriteCheckBox)
 
@@ -299,7 +305,7 @@ class Ui_MainWindow(object):
         self.destinationFolderLineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"No destination folder selected.", None))
         self.selectDestinationFolderButton.setText(QCoreApplication.translate("MainWindow", u"Select folder", None))
         self.folderSettingsGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Folder settings", None))
-        self.includeSubFoldersCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include subfolders", None))
+        self.includeSubfoldersCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include subfolders", None))
         self.includeAllCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include all supported types", None))
         self.includeJsonCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include JSON files", None))
         self.includeXmlCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include XML files", None))

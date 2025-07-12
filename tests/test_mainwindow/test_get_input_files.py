@@ -52,21 +52,29 @@ class TestGetInputFiles:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
 
-        window.folderSettingsGroupBox.setEnabled(True)
+        window.includeSubfoldersCheckBox.setEnabled(True)
+        window.includeAllCheckBox.setEnabled(True)
+        window.includeJsonCheckBox.setEnabled(True)
+        window.includeXmlCheckBox.setEnabled(True)
+        window.includeYamlCheckBox.setEnabled(True)
 
         window.get_input_files()
 
-        assert window.folderSettingsGroupBox.isEnabled() == False
+        assert window.includeSubfoldersCheckBox.isEnabled() == False
+        assert window.includeAllCheckBox.isEnabled() == False
+        assert window.includeJsonCheckBox.isEnabled() == False
+        assert window.includeXmlCheckBox.isEnabled() == False
+        assert window.includeYamlCheckBox.isEnabled() == False
 
-    def test_enables_backup_settings(self, qtbot, mocker):
+    def test_enables_overwrite_checkbox(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
 
-        window.backupSettingsGroupBox.setEnabled(False)
+        window.overwriteCheckBox.setEnabled(False)
 
         window.get_input_files()
 
-        assert window.backupSettingsGroupBox.isEnabled() == True
+        assert window.overwriteCheckBox.isEnabled() == True

@@ -19,17 +19,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selectSourceFolderButton.clicked.connect(self.get_input_folder)
         self.selectSourceFilesButton.clicked.connect(self.get_input_files)
         self.selectDestinationFolderButton.clicked.connect(self.get_output_folder)
-        self.overwriteCheckBox.checkStateChanged.connect(self.change_overwrite_tate)
-        self.backupCheckBox.checkStateChanged.connect(self.change_backup_state)
+
+        self.overwriteCheckBox.checkStateChanged.connect(self._overwrite_state_changed)
+        self.backupCheckBox.checkStateChanged.connect(self._backup_state_changed)
         self.selectBackupFolderButton.clicked.connect(self.get_backup_folder)
+
+        self.includedFileTypes = [".json", ".xml", ".yaml", ".yml"]
+        self.includeAllCheckBox.checkStateChanged.connect(self._include_all_state_changed)
 
     def get_input_folder(self):
         result = self.show_file_dialog(folder_mode = True)
         if result:
             self.source_paths = result
             self.sourceSelectionDisplay.setText(self.source_paths[0])
-            self.folderSettingsGroupBox.setEnabled(True)
-            self.backupSettingsGroupBox.setEnabled(True)
+            self.includeSubfoldersCheckBox.setEnabled(True)
+            self.includeAllCheckBox.setEnabled(True)
+            self.overwriteCheckBox.setEnabled(True)
+
+            if not self.includeAllCheckBox.isChecked():
+                self.includeJsonCheckBox.setEnabled(True)
+                self.includeXmlCheckBox.setEnabled(True)
+                self.includeYamlCheckBox.setEnabled(True)
 
     def get_input_files(self):
         result = self.show_file_dialog()
@@ -37,8 +47,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.source_paths = result
             path, _ = os.path.split(self.source_paths[0])
             self.sourceSelectionDisplay.setText(f"{len(self.source_paths)} file(s) selected from '{path}'.")
-            self.folderSettingsGroupBox.setEnabled(False)
-            self.backupSettingsGroupBox.setEnabled(True)
+            self.includeSubfoldersCheckBox.setEnabled(False)
+            self.includeAllCheckBox.setEnabled(False)
+            self.includeJsonCheckBox.setEnabled(False)
+            self.includeXmlCheckBox.setEnabled(False)
+            self.includeYamlCheckBox.setEnabled(False)
+            self.overwriteCheckBox.setEnabled(True)
 
     def get_output_folder(self):
         result = self.show_file_dialog(folder_mode = True)
@@ -65,28 +79,56 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec():
             return dialog.selectedFiles()
 
-    def change_overwrite_tate(self, state):
-        if state == Qt.Unchecked:
-            if self.backupCheckBox.isEnabled():
-                self.backupFolderLineEdit.setEnabled(False)
-                self.selectBackupFolderButton.setEnabled(False)
-            self.backupCheckBox.setEnabled(False)
-            self.destinationFolderLineEdit.setEnabled(True)
-            self.selectDestinationFolderButton.setEnabled(True)
+    def _overwrite_state_changed(self, state):
+        if state == Qt.Checked:
+            self.handle_overwrite_state_changed(True)
+        else:
+            self.handle_overwrite_state_changed(False)
 
-        elif state == Qt.Checked:
+    def handle_overwrite_state_changed(self, checked):
+        if checked:
             if self.backupCheckBox.isChecked():
                 self.backupFolderLineEdit.setEnabled(True)
                 self.selectBackupFolderButton.setEnabled(True)
+
             self.backupCheckBox.setEnabled(True)
             self.destinationFolderLineEdit.setEnabled(False)
             self.selectDestinationFolderButton.setEnabled(False)
-
-    def change_backup_state(self, state):
-        if state == Qt.Unchecked:
+        else:
+            self.backupCheckBox.setEnabled(False)
             self.backupFolderLineEdit.setEnabled(False)
             self.selectBackupFolderButton.setEnabled(False)
-        elif state == Qt.Checked:
+            self.destinationFolderLineEdit.setEnabled(True)
+            self.selectDestinationFolderButton.setEnabled(True)
+
+    def _backup_state_changed(self, state):
+        if state == Qt.Checked:
+            self.handle_backup_state_changed(True)
+        else:
+            self.handle_backup_state_changed(False)
+
+    def handle_backup_state_changed(self, checked):
+        if checked:
             self.backupFolderLineEdit.setEnabled(True)
             self.selectBackupFolderButton.setEnabled(True)
+        else:
+            print("NO")
+            self.backupFolderLineEdit.setEnabled(False)
+            self.selectBackupFolderButton.setEnabled(False)
+
+    def _include_all_state_changed(self, state):
+        if state == Qt.Checked:
+            self.handle_include_all_state_changed(True)
+        else:
+            self.handle_include_all_state_changed(False)
+
+    def handle_include_all_state_changed(self, checked):
+        if checked:
+            self.includeJsonCheckBox.setEnabled(False)
+            self.includeXmlCheckBox.setEnabled(False)
+            self.includeYamlCheckBox.setEnabled(False)
+        else:
+            self.includeJsonCheckBox.setEnabled(True)
+            self.includeXmlCheckBox.setEnabled(True)
+            self.includeYamlCheckBox.setEnabled(True)
 

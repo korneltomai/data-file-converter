@@ -126,7 +126,7 @@
       <item>
        <widget class="QGroupBox" name="folderSettingsGroupBox">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="title">
          <string>Folder settings</string>
@@ -139,7 +139,10 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QCheckBox" name="includeSubFoldersCheckBox">
+          <widget class="QCheckBox" name="includeSubfoldersCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Include subfolders</string>
            </property>
@@ -150,6 +153,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="includeAllCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Include all supported types</string>
            </property>
@@ -160,31 +166,40 @@
          </item>
          <item>
           <widget class="QCheckBox" name="includeJsonCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Include JSON files</string>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="includeXmlCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Include XML files</string>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="includeYamlCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Include YAML files</string>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -194,7 +209,7 @@
       <item>
        <widget class="QGroupBox" name="backupSettingsGroupBox">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="title">
          <string>Backup settings</string>
@@ -205,6 +220,9 @@
          </property>
          <item>
           <widget class="QCheckBox" name="overwriteCheckBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Overwrite original files</string>
            </property>
