@@ -53,7 +53,6 @@ class TestGetInputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-        window.includeAllCheckBox.setChecked(True)
         window.includeSubfoldersCheckBox.setEnabled(False)
         window.includeAllCheckBox.setEnabled(False)
 
@@ -62,12 +61,12 @@ class TestGetInputFolder:
         assert window.includeSubfoldersCheckBox.isEnabled() == True
         assert window.includeAllCheckBox.isEnabled() == True
 
-    @pytest.mark.parametrize("include_all_checked, enable_types", [
+    @pytest.mark.parametrize("include_all_checked, expected_state", [
         (True, False),
         (False, True),
     ])
 
-    def test_sets_type_checkboxes_state(self, qtbot, mocker, include_all_checked, enable_types):
+    def test_sets_type_checkboxes_state(self, qtbot, mocker, include_all_checked, expected_state):
         window = MainWindow()
         qtbot.addWidget(window)
 
@@ -81,9 +80,9 @@ class TestGetInputFolder:
 
         window.get_input_folder()
 
-        assert window.includeJsonCheckBox.isEnabled() == enable_types
-        assert window.includeXmlCheckBox.isEnabled() == enable_types
-        assert window.includeYamlCheckBox.isEnabled() == enable_types
+        assert window.includeJsonCheckBox.isEnabled() == expected_state
+        assert window.includeXmlCheckBox.isEnabled() == expected_state
+        assert window.includeYamlCheckBox.isEnabled() == expected_state
 
     def test_enables_overwrite_checkbox(self, qtbot, mocker):
         window = MainWindow()

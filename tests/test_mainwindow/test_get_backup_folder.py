@@ -25,7 +25,6 @@ class TestGetBackupFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
-
         window.get_backup_folder()
 
         assert window.backup_folder == "C:/Folder/Data/Sample"

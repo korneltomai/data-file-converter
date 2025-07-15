@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLayout, QLineEdit,
-    QMainWindow, QPlainTextEdit, QPushButton, QRadioButton,
+    QListView, QMainWindow, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 import app.rc_resources
 
@@ -266,17 +266,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.line_2)
 
-        self.consoleTextEdit = QPlainTextEdit(self.centralwidget)
-        self.consoleTextEdit.setObjectName(u"consoleTextEdit")
+        self.listView = QListView(self.centralwidget)
+        self.listView.setObjectName(u"listView")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.MinimumExpanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.consoleTextEdit.sizePolicy().hasHeightForWidth())
-        self.consoleTextEdit.setSizePolicy(sizePolicy3)
-        self.consoleTextEdit.setMinimumSize(QSize(0, 95))
-        self.consoleTextEdit.setReadOnly(True)
+        sizePolicy3.setHeightForWidth(self.listView.sizePolicy().hasHeightForWidth())
+        self.listView.setSizePolicy(sizePolicy3)
+        self.listView.setMinimumSize(QSize(0, 100))
 
-        self.verticalLayout.addWidget(self.consoleTextEdit)
+        self.verticalLayout.addWidget(self.listView)
 
         self.convertButton = QPushButton(self.centralwidget)
         self.convertButton.setObjectName(u"convertButton")
