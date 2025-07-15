@@ -15,6 +15,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.source_paths = []
         self.destination_folder = str(Path(f"{QDir.currentPath()}/output"))
         self.destinationFolderLineEdit.setText(self.destination_folder)
+        self.overwrite_files = False
+        self.make_backup = False
         self.backup_folder = str(Path(f"{QDir.currentPath()}/backups"))
         self.backupFolderLineEdit.setText(self.backup_folder)
 
@@ -97,6 +99,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def handle_overwrite_state_changed(self, checked):
         if checked:
+            self.overwrite_files = True
+
             if self.backupCheckBox.isChecked():
                 self.backupFolderLineEdit.setEnabled(True)
                 self.selectBackupFolderButton.setEnabled(True)
@@ -105,6 +109,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.destinationFolderLineEdit.setEnabled(False)
             self.selectDestinationFolderButton.setEnabled(False)
         else:
+            self.overwrite_files = False
+
             self.backupCheckBox.setEnabled(False)
             self.backupFolderLineEdit.setEnabled(False)
             self.selectBackupFolderButton.setEnabled(False)
@@ -119,10 +125,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def handle_backup_state_changed(self, checked):
         if checked:
+            self.make_backup = True
+
             self.backupFolderLineEdit.setEnabled(True)
             self.selectBackupFolderButton.setEnabled(True)
         else:
-            print("NO")
+            self.make_backup = False
+
             self.backupFolderLineEdit.setEnabled(False)
             self.selectBackupFolderButton.setEnabled(False)
 

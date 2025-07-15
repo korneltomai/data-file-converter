@@ -24,6 +24,21 @@ class TestHandleOverwriteStateChanged:
         assert window.backupCheckBox.isEnabled() == expected_state
 
     @pytest.mark.parametrize("checked, expected_state", [
+        (True, True),
+        (False, False)
+    ])
+
+    def test_toggles_overwrite_files(self, qtbot, checked, expected_state):
+        window = MainWindow()
+        qtbot.addWidget(window)
+
+        window.overwrite_files = not expected_state
+
+        window.handle_overwrite_state_changed(checked)
+
+        assert window.overwrite_files == expected_state
+
+    @pytest.mark.parametrize("checked, expected_state", [
         (True, False),
         (False, True)
     ])
@@ -52,3 +67,5 @@ class TestHandleOverwriteStateChanged:
 
         assert window.backupFolderLineEdit.isEnabled() == False
         assert window.selectBackupFolderButton.isEnabled() == False
+
+
