@@ -421,7 +421,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPlainTextEdit" name="consoleTextEdit">
+     <widget class="QListView" name="listView">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>
@@ -431,11 +431,8 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>95</height>
+        <height>100</height>
        </size>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
       </property>
      </widget>
     </item>
