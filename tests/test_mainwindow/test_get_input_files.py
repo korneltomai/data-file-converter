@@ -3,6 +3,8 @@
 import sys, os
 sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../.."))
 
+from pathlib import Path
+
 from app.mainwindow import MainWindow
 
 class TestGetInputFiles:
@@ -27,8 +29,8 @@ class TestGetInputFiles:
 
         window.get_input_files()
 
-        assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
-        assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
+        assert window.source_paths == [str(Path("C:/Folder/Data/Test/example1.json")), str(Path("C:/Folder/Data/Test/example2.xml")), str(Path("C:/Folder/Data/Test/example3.yaml"))]
+        assert window.sourceSelectionDisplay.text() == f"3 file(s) selected from '{str(Path("C:/Folder/Data/Test"))}'."
 
     def test_no_selection(self, qtbot, mocker):
         window = MainWindow()
@@ -37,13 +39,13 @@ class TestGetInputFiles:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = []
 
-        window.source_paths = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
-        window.sourceSelectionDisplay.setText("3 file(s) selected from 'C:/Folder/Data/Test'.")
+        window.source_paths = [str(Path("C:/Folder/Data/Test/example1.json")), str(Path("C:/Folder/Data/Test/example2.xml")), str(Path("C:/Folder/Data/Test/example3.yaml"))]
+        window.sourceSelectionDisplay.setText(f"3 file(s) selected from '{str(Path("C:/Folder/Data/Test"))}'.")
 
         window.get_input_files()
 
-        assert window.source_paths == ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
-        assert window.sourceSelectionDisplay.text() == "3 file(s) selected from 'C:/Folder/Data/Test'."
+        assert window.source_paths == [str(Path("C:/Folder/Data/Test/example1.json")), str(Path("C:/Folder/Data/Test/example2.xml")), str(Path("C:/Folder/Data/Test/example3.yaml"))]
+        assert window.sourceSelectionDisplay.text() == f"3 file(s) selected from '{str(Path("C:/Folder/Data/Test"))}'."
 
     def test_disables_folder_settings(self, qtbot, mocker):
         window = MainWindow()

@@ -3,6 +3,8 @@ import os
 from PySide6.QtWidgets import QMainWindow, QFileDialog
 from PySide6.QtCore import QDir, Qt
 
+from pathlib import Path
+
 from app.ui_mainwindow import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -11,9 +13,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.source_paths = []
-        self.destination_folder = f"{QDir.currentPath()}/output"
+        self.destination_folder = str(Path(f"{QDir.currentPath()}/output"))
         self.destinationFolderLineEdit.setText(self.destination_folder)
-        self.backup_folder = f"{QDir.currentPath()}/backups"
+        self.backup_folder = str(Path(f"{QDir.currentPath()}/backups"))
         self.backupFolderLineEdit.setText(self.backup_folder)
 
         self.selectSourceFolderButton.clicked.connect(self.get_input_folder)
@@ -38,7 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def get_input_folder(self):
         result = self.show_file_dialog(folder_mode = True)
         if result:
-            self.source_paths = result
+            self.source_paths = [str(Path(path)) for path in result]
             self.sourceSelectionDisplay.setText(self.source_paths[0])
             self.includeSubfoldersCheckBox.setEnabled(True)
             self.includeAllCheckBox.setEnabled(True)
@@ -52,7 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def get_input_files(self):
         result = self.show_file_dialog()
         if result:
-            self.source_paths = result
+            self.source_paths = [str(Path(path)) for path in result]
             path, _ = os.path.split(self.source_paths[0])
             self.sourceSelectionDisplay.setText(f"{len(self.source_paths)} file(s) selected from '{path}'.")
             self.includeSubfoldersCheckBox.setEnabled(False)
@@ -65,13 +67,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def get_output_folder(self):
         result = self.show_file_dialog(folder_mode = True)
         if result:
-            self.destination_folder = result[0]
+            self.destination_folder = str(Path(result[0]))
             self.destinationFolderLineEdit.setText(self.destination_folder)
 
     def get_backup_folder(self):
         result = self.show_file_dialog(folder_mode = True)
         if result:
-            self.backup_folder = result[0]
+            self.backup_folder = str(Path(result[0]))
             self.backupFolderLineEdit.setText(self.backup_folder)
 
     def show_file_dialog(self, folder_mode = False):
