@@ -2,9 +2,7 @@ import os
 
 from PySide6.QtWidgets import QMainWindow, QFileDialog
 from PySide6.QtCore import QDir, Qt
-
 from pathlib import Path
-
 from app.ui_mainwindow import Ui_MainWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -13,6 +11,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.source_paths = []
+        self.source_is_folder = False
         self.destination_folder = str(Path(f"{QDir.currentPath()}/output"))
         self.destinationFolderLineEdit.setText(self.destination_folder)
         self.overwrite_files = False
@@ -28,7 +27,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.backupCheckBox.checkStateChanged.connect(self.__backup_state_changed)
         self.selectBackupFolderButton.clicked.connect(self.get_backup_folder)
 
+        self.include_subfolders = False
         self.included_file_types = [".json", ".xml", ".yaml", ".yml"]
+        self.includeSubfoldersCheckBox.checkStateChanged.connect(self.__include_subfolders_state_changed)
         self.includeAllCheckBox.checkStateChanged.connect(self.__include_all_state_changed)
         self.includeJsonCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, (".json",)))
         self.includeXmlCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, (".xml",)))
@@ -53,6 +54,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.includeXmlCheckBox.setEnabled(True)
                 self.includeYamlCheckBox.setEnabled(True)
 
+            self.source_is_folder = True
+
     def get_input_files(self):
         result = self.show_file_dialog()
         if result:
@@ -65,6 +68,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.includeXmlCheckBox.setEnabled(False)
             self.includeYamlCheckBox.setEnabled(False)
             self.overwriteCheckBox.setEnabled(True)
+
+            self.source_is_folder = False
 
     def get_output_folder(self):
         result = self.show_file_dialog(folder_mode = True)
@@ -176,3 +181,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def handle_target_type_changed(self, type):
         self.target_type = type
 
+    def __include_subfolders_state_changed(self, state):
+        if state == Qt.Checked:
+            self.handle_include_subfolders_state_changed(True)
+        else:
+            self.handle_include_subfolders_state_changed(False)
+
+    def handle_include_subfolders_state_changed(self, checked):
+        self.include_subfolders = checked
