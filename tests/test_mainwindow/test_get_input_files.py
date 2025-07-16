@@ -29,7 +29,7 @@ class TestGetInputFiles:
 
         window.get_input_files()
 
-        assert window.source_paths == [str(Path("C:/Folder/Data/Test/example1.json")), str(Path("C:/Folder/Data/Test/example2.xml")), str(Path("C:/Folder/Data/Test/example3.yaml"))]
+        assert window.source_paths == [Path("C:/Folder/Data/Test/example1.json"), Path("C:/Folder/Data/Test/example2.xml"), Path("C:/Folder/Data/Test/example3.yaml")]
         assert window.sourceSelectionDisplay.text() == f"3 file(s) selected from '{str(Path("C:/Folder/Data/Test"))}'."
 
     def test_no_selection(self, qtbot, mocker):
@@ -39,12 +39,12 @@ class TestGetInputFiles:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = []
 
-        window.source_paths = [str(Path("C:/Folder/Data/Test/example1.json")), str(Path("C:/Folder/Data/Test/example2.xml")), str(Path("C:/Folder/Data/Test/example3.yaml"))]
+        window.source_paths = [Path("C:/Folder/Data/Test/example1.json"), Path("C:/Folder/Data/Test/example2.xml"), Path("C:/Folder/Data/Test/example3.yaml")]
         window.sourceSelectionDisplay.setText(f"3 file(s) selected from '{str(Path("C:/Folder/Data/Test"))}'.")
 
         window.get_input_files()
 
-        assert window.source_paths == [str(Path("C:/Folder/Data/Test/example1.json")), str(Path("C:/Folder/Data/Test/example2.xml")), str(Path("C:/Folder/Data/Test/example3.yaml"))]
+        assert window.source_paths == [Path("C:/Folder/Data/Test/example1.json"), Path("C:/Folder/Data/Test/example2.xml"), Path("C:/Folder/Data/Test/example3.yaml")]
         assert window.sourceSelectionDisplay.text() == f"3 file(s) selected from '{str(Path("C:/Folder/Data/Test"))}'."
 
     def test_disables_folder_settings(self, qtbot, mocker):

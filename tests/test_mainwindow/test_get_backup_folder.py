@@ -29,7 +29,7 @@ class TestGetBackupFolder:
 
         window.get_backup_folder()
 
-        assert window.backup_folder == str(Path("C:/Folder/Data/Sample"))
+        assert window.backup_folder == Path("C:/Folder/Data/Sample")
         assert window.backupFolderLineEdit.text() == str(Path("C:/Folder/Data/Sample"))
 
     def test_no_selection(self, qtbot, mocker):
@@ -39,10 +39,10 @@ class TestGetBackupFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = []
 
-        window.backup_folder = str(Path("C:/Folder/Data/Sample"))
+        window.backup_folder = Path("C:/Folder/Data/Sample")
         window.backupFolderLineEdit.setText(str(Path("C:/Folder/Data/Sample")))
 
         window.get_backup_folder()
 
-        assert window.backup_folder == str(Path("C:/Folder/Data/Sample"))
+        assert window.backup_folder == Path("C:/Folder/Data/Sample")
         assert window.backupFolderLineEdit.text() == str(Path("C:/Folder/Data/Sample"))

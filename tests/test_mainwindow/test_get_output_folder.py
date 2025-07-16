@@ -29,7 +29,7 @@ class TestGetOutputFolder:
 
         window.get_output_folder()
 
-        assert window.destination_folder == str(Path("C:/Folder/Data/Sample"))
+        assert window.destination_folder == Path("C:/Folder/Data/Sample")
         assert window.destinationFolderLineEdit.text() == str(Path("C:/Folder/Data/Sample"))
 
     def test_no_selection(self, qtbot, mocker):
@@ -39,10 +39,10 @@ class TestGetOutputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = []
 
-        window.destination_folder = str(Path("C:/Folder/Data/Sample"))
+        window.destination_folder = Path("C:/Folder/Data/Sample")
         window.destinationFolderLineEdit.setText(str(Path("C:/Folder/Data/Sample")))
 
         window.get_output_folder()
 
-        assert window.destination_folder == str(Path("C:/Folder/Data/Sample"))
+        assert window.destination_folder == Path("C:/Folder/Data/Sample")
         assert window.destinationFolderLineEdit.text() == str(Path("C:/Folder/Data/Sample"))

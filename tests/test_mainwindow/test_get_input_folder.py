@@ -30,7 +30,7 @@ class TestGetInputFolder:
 
         window.get_input_folder()
 
-        assert window.source_paths == [str(Path("C:/Folder/Data/Sample"))]
+        assert window.source_paths == [Path("C:/Folder/Data/Sample")]
         assert window.sourceSelectionDisplay.text() == str(Path("C:/Folder/Data/Sample"))
 
     def test_no_selection(self, qtbot, mocker):
@@ -40,12 +40,12 @@ class TestGetInputFolder:
         mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
         mock_dialog.return_value = []
 
-        window.source_paths = [str(Path("C:/Folder/Data/Sample"))]
+        window.source_paths = [Path("C:/Folder/Data/Sample")]
         window.sourceSelectionDisplay.setText(str(Path("C:/Folder/Data/Sample")))
 
         window.get_input_folder()
 
-        assert window.source_paths == [str(Path("C:/Folder/Data/Sample"))]
+        assert window.source_paths == [Path("C:/Folder/Data/Sample")]
         assert window.sourceSelectionDisplay.text() == str(Path("C:/Folder/Data/Sample"))
 
     def test_enables_subfolder_and_include_all_checkboxes(self, qtbot, mocker):
