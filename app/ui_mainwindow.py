@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLayout, QLineEdit,
     QListView, QMainWindow, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-import app.rc_resources
+import rc_resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -266,16 +266,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.line_2)
 
-        self.listView = QListView(self.centralwidget)
-        self.listView.setObjectName(u"listView")
+        self.consoleListView = QListView(self.centralwidget)
+        self.consoleListView.setObjectName(u"consoleListView")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.MinimumExpanding)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.listView.sizePolicy().hasHeightForWidth())
-        self.listView.setSizePolicy(sizePolicy3)
-        self.listView.setMinimumSize(QSize(0, 100))
+        sizePolicy3.setHeightForWidth(self.consoleListView.sizePolicy().hasHeightForWidth())
+        self.consoleListView.setSizePolicy(sizePolicy3)
+        self.consoleListView.setMinimumSize(QSize(0, 100))
 
-        self.verticalLayout.addWidget(self.listView)
+        self.verticalLayout.addWidget(self.consoleListView)
 
         self.convertButton = QPushButton(self.centralwidget)
         self.convertButton.setObjectName(u"convertButton")

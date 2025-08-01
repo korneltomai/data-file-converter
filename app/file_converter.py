@@ -11,10 +11,18 @@ def convert_files(file_paths, target_type, overwrite = True, destination_path = 
     print(make_backup)
     print(backup_path)
 
-def get_file_paths(folder_path, include_subfolders, included_file_types):
+def get_file_paths(add_console_message, folder_path, include_subfolders, included_file_types):
+
+    add_console_message(f"Searching for {included_file_types} files in '{folder_path}' and subfolders...") if include_subfolders else add_console_message(f"Searching for {included_file_types} files in '{folder_path}'...")
+
+    file_paths = []
     if include_subfolders:
-        return list(filter(lambda path: path.suffix in included_file_types, folder_path.glob("**/*")))
+        file_paths = list(filter(lambda path: path.suffix in included_file_types, folder_path.glob("**/*")))
     else:
-        return list(filter(lambda path: path.suffix in included_file_types, folder_path.glob("*")))
+        file_paths = list(filter(lambda path: path.suffix in included_file_types, folder_path.glob("*")))
+
+    add_console_message(f"{len(file_paths)} files found.")
+
+    return file_paths
 
 

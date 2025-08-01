@@ -421,7 +421,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QListView" name="listView">
+     <widget class="QListView" name="consoleListView">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>

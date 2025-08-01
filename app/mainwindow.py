@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QMainWindow, QFileDialog
 from PySide6.QtCore import QDir, Qt
 from pathlib import Path
 from app.ui_mainwindow import Ui_MainWindow
+from app.console import Console
 import app.file_converter as file_converter
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -42,6 +43,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.convertToYamlRadioButton.toggled.connect(lambda: self.handle_target_type_changed("yaml"))
 
         self.convertButton.clicked.connect(self.handle_convert_clicked)
+
+        self.console = Console(self.consoleListView)
 
     def get_input_folder(self):
         result = self.show_file_dialog(folder_mode = True)
@@ -181,7 +184,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.include_subfolders = checked
 
     def handle_convert_clicked(self):
-        file_paths = self.source_paths if not self.source_is_folder else file_converter.get_file_paths(self.source_paths[0], self.include_subfolders, self.included_file_types)
+        file_paths = self.source_paths if not self.source_is_folder else file_converter.get_file_paths(self.console.add, self.source_paths[0], self.include_subfolders, self.included_file_types)
 
         if self.overwrite_files:
             file_converter.convert_files(file_paths, self.target_type, make_backup = self.make_backup, backup_path = self.backup_folder)
