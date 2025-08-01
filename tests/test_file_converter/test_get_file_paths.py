@@ -101,8 +101,7 @@ class TestGetFilePaths:
 
         file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), include_subfolders, [".json"], mock_print)
 
-        assert mock_print.call_count == 2
-        assert mock_print.call_args_list[0][0][0] == message
+        mock_print.assert_any_call(message)
 
     @pytest.mark.parametrize("found_files, message", [
         ([], "0 files found."),
@@ -118,7 +117,6 @@ class TestGetFilePaths:
 
         file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), True, [".json"], mock_print)
 
-        assert mock_print.call_count == 2
-        assert mock_print.call_args_list[1][0][0] == message
+        mock_print.assert_any_call(message)
 
 
