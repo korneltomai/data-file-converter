@@ -60,7 +60,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.source_is_folder = True
             self.convertButton.setEnabled(True)
 
-
     def get_input_files(self):
         result = self.show_file_dialog()
         if result:
@@ -103,10 +102,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return dialog.selectedFiles()
 
     def __overwrite_state_changed(self, state):
-        if state == Qt.Checked:
-            self.handle_overwrite_state_changed(True)
-        else:
-            self.handle_overwrite_state_changed(False)
+        self.handle_overwrite_state_changed(True) if state == Qt.Checked else self.handle_overwrite_state_changed(False)
 
     def handle_overwrite_state_changed(self, checked):
         if checked:
@@ -129,10 +125,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.selectDestinationFolderButton.setEnabled(True)
 
     def __backup_state_changed(self, state):
-        if state == Qt.Checked:
-            self.handle_backup_state_changed(True)
-        else:
-            self.handle_backup_state_changed(False)
+        self.handle_backup_state_changed(True) if state == Qt.Checked else self.handle_backup_state_changed(False)
 
     def handle_backup_state_changed(self, checked):
         if checked:
@@ -147,10 +140,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.selectBackupFolderButton.setEnabled(False)
 
     def __include_all_state_changed(self, state):
-        if state == Qt.Checked:
-            self.handle_include_all_state_changed(True)
-        else:
-            self.handle_include_all_state_changed(False)
+        self.handle_include_all_state_changed(True) if state == Qt.Checked else self.handle_include_all_state_changed(False)
 
     def handle_include_all_state_changed(self, checked):
         if checked:
@@ -173,10 +163,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.included_file_types.extend((".yaml", ".yml"))
 
     def __include_type_state_changed(self, state, types):
-        if state == Qt.Checked:
-            self.handle_include_type_state_changed(True, types)
-        else:
-            self.handle_include_type_state_changed(False, types)
+        self.handle_include_type_state_changed(True, types) if state == Qt.Checked else self.handle_include_type_state_changed(False, types)
 
     def handle_include_type_state_changed(self, checked, types):
         if checked and not set(types).issubset(self.included_file_types):
@@ -188,10 +175,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.target_type = type
 
     def __include_subfolders_state_changed(self, state):
-        if state == Qt.Checked:
-            self.handle_include_subfolders_state_changed(True)
-        else:
-            self.handle_include_subfolders_state_changed(False)
+        self.handle_include_subfolders_state_changed(True) if state == Qt.Checked else self.handle_include_subfolders_state_changed(False)
 
     def handle_include_subfolders_state_changed(self, checked):
         self.include_subfolders = checked
