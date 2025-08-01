@@ -30,7 +30,7 @@ class TestHandleConvertClicked:
 
         window.handle_convert_clicked()
 
-        mock_func.assert_called_once_with(window.source_paths[0], window.include_subfolders, window.included_file_types)
+        mock_func.assert_called_once_with(window.source_paths[0], window.include_subfolders, window.included_file_types, window.console.add)
 
     def test_source_is_folder_and_overwrite_calls_convert_files(self, qtbot, mocker):
         window = MainWindow()

@@ -11,8 +11,7 @@ def convert_files(file_paths, target_type, overwrite = True, destination_path = 
     print(make_backup)
     print(backup_path)
 
-def get_file_paths(add_console_message, folder_path, include_subfolders, included_file_types):
-
+def get_file_paths(folder_path, include_subfolders, included_file_types, add_console_message):
     add_console_message(f"Searching for {included_file_types} files in '{folder_path}' and subfolders...") if include_subfolders else add_console_message(f"Searching for {included_file_types} files in '{folder_path}'...")
 
     file_paths = []
