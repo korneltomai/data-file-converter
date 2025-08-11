@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 17.0.0, 2025-08-01T14:05:56. -->
+<!-- Written by QtCreator 17.0.0, 2025-08-11T16:41:57. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -279,6 +279,7 @@
      <value type="QString" key="PythonEditor.RunConfiguation.Script">D:\Programming\Python\Projects\data-file-converter\app\main.py</value>
      <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
      <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+     <value type="bool" key="RunConfiguration.UseTerminal">false</value>
      <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Programming/Python/Projects/data-file-converter/app</value>
     </valuemap>
     <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">8</value>
@@ -437,6 +438,7 @@
     <value type="QString" key="PythonEditor.RunConfiguation.Script">D:\Programming\Python\Projects\data-file-converter\app\main.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseTerminal">false</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Programming/Python/Projects/data-file-converter/app</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">8</value>

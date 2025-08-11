@@ -2,18 +2,18 @@
 
 from pathlib import Path
 import json
+import yaml
+import xmltodict
 
 def convert_files(file_paths, target_type, destination_path, parent_folder):
-    print(file_paths)
-    print(target_type)
-    print(destination_path)
-    print(parent_folder)
+    for file_path in file_paths:
+        data = _load_file(file_path)
+        print(data)
 
 def overwrite_files(file_paths, target_type, make_backup, backup_path):
-    print(file_paths)
-    print(target_type)
-    print(make_backup)
-    print(backup_path)
+    for file_path in file_paths:
+        data = _load_file(file_path)
+        print(data)
 
 def get_file_paths(folder_path, include_subfolders, included_file_types, add_console_message):
     add_console_message(f"Searching for {included_file_types} files in '{folder_path}' and subfolders...") if include_subfolders else add_console_message(f"Searching for {included_file_types} files in '{folder_path}'...")
@@ -28,4 +28,12 @@ def get_file_paths(folder_path, include_subfolders, included_file_types, add_con
 
     return file_paths
 
-
+def _load_file(file_path):
+    extension = file_path.suffix
+    with open(file_path, 'rb') as file:
+        if extension == ".json":
+            return json.load(file)
+        if extension == ".xml":
+            return xmltodict.parse(file)
+        if extension in {".yaml", ".yml"}:
+            return yaml.safe_load(file)
