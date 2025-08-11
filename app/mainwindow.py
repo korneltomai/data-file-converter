@@ -157,8 +157,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def handle_convert_clicked(self):
         file_paths = self.source_paths if not self.source_is_folder else file_converter.get_file_paths(self.source_paths[0], self.include_subfolders, self.included_file_types, self.console.add)
+        selected_folder = self.source_paths[0] if self.source_is_folder else None
 
         if self.overwrite_files:
-            file_converter.convert_files(file_paths, self.target_type, make_backup = self.make_backup, backup_path = self.backup_folder)
+            file_converter.overwrite_files(file_paths, self.target_type, self.make_backup, self.backup_folder)
         else:
-            file_converter.convert_files(file_paths, self.target_type, overwrite = False, destination_path = self.destination_folder)
+            file_converter.convert_files(file_paths, self.target_type, self.destination_folder, selected_folder)

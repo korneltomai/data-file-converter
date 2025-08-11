@@ -55,7 +55,6 @@ class TestGetInputFiles:
         mock_dialog.return_value = ["C:/Folder/Data/Test/example1.json", "C:/Folder/Data/Test/example2.xml", "C:/Folder/Data/Test/example3.yaml"]
 
         window.includeSubfoldersCheckBox.setEnabled(True)
-        window.includeAllCheckBox.setEnabled(True)
         window.includeJsonCheckBox.setEnabled(True)
         window.includeXmlCheckBox.setEnabled(True)
         window.includeYamlCheckBox.setEnabled(True)
@@ -63,7 +62,6 @@ class TestGetInputFiles:
         window.get_input_files()
 
         assert window.includeSubfoldersCheckBox.isEnabled() == False
-        assert window.includeAllCheckBox.isEnabled() == False
         assert window.includeJsonCheckBox.isEnabled() == False
         assert window.includeXmlCheckBox.isEnabled() == False
         assert window.includeYamlCheckBox.isEnabled() == False

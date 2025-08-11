@@ -48,7 +48,7 @@ class TestGetInputFolder:
         assert window.source_paths == [Path("C:/Folder/Data/Sample")]
         assert window.sourceSelectionDisplay.text() == str(Path("C:/Folder/Data/Sample"))
 
-    def test_enables_subfolder_and_include_all_checkboxes(self, qtbot, mocker):
+    def test_enables_subfolder_and_include_checkboxes(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 
@@ -56,35 +56,16 @@ class TestGetInputFolder:
         mock_dialog.return_value = ["C:/Folder/Data/Sample"]
 
         window.includeSubfoldersCheckBox.setEnabled(False)
-        window.includeAllCheckBox.setEnabled(False)
-
-        window.get_input_folder()
-
-        assert window.includeSubfoldersCheckBox.isEnabled() == True
-        assert window.includeAllCheckBox.isEnabled() == True
-
-    @pytest.mark.parametrize("include_all_checked, expected_state", [
-        (True, False),
-        (False, True),
-    ])
-
-    def test_sets_type_checkboxes_state(self, qtbot, mocker, include_all_checked, expected_state):
-        window = MainWindow()
-        qtbot.addWidget(window)
-
-        mock_dialog = mocker.patch("app.mainwindow.MainWindow.show_file_dialog")
-        mock_dialog.return_value = ["C:/Folder/Data/Sample"]
-
-        window.includeAllCheckBox.setChecked(include_all_checked)
         window.includeJsonCheckBox.setEnabled(False)
         window.includeXmlCheckBox.setEnabled(False)
         window.includeYamlCheckBox.setEnabled(False)
 
         window.get_input_folder()
 
-        assert window.includeJsonCheckBox.isEnabled() == expected_state
-        assert window.includeXmlCheckBox.isEnabled() == expected_state
-        assert window.includeYamlCheckBox.isEnabled() == expected_state
+        assert window.includeSubfoldersCheckBox.isEnabled() == True
+        assert window.includeJsonCheckBox.isEnabled() == True
+        assert window.includeXmlCheckBox.isEnabled() == True
+        assert window.includeYamlCheckBox.isEnabled() == True
 
     def test_enables_overwrite_checkbox(self, qtbot, mocker):
         window = MainWindow()

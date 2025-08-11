@@ -3,11 +3,15 @@
 from pathlib import Path
 import json
 
-def convert_files(file_paths, target_type, overwrite = True, destination_path = None, make_backup = False, backup_path = None):
+def convert_files(file_paths, target_type, destination_path, parent_folder):
     print(file_paths)
     print(target_type)
-    print(overwrite)
     print(destination_path)
+    print(parent_folder)
+
+def overwrite_files(file_paths, target_type, make_backup, backup_path):
+    print(file_paths)
+    print(target_type)
     print(make_backup)
     print(backup_path)
 

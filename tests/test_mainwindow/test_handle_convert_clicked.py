@@ -32,7 +32,7 @@ class TestHandleConvertClicked:
 
         mock_func.assert_called_once_with(window.source_paths[0], window.include_subfolders, window.included_file_types, window.console.add)
 
-    def test_source_is_folder_and_overwrite_calls_convert_files(self, qtbot, mocker):
+    def test_source_is_folder_and_overwrite_calls_overwrite_files(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 
@@ -44,7 +44,7 @@ class TestHandleConvertClicked:
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
         ]
 
-        mock_convert_files = mocker.patch("app.file_converter.convert_files")
+        mock_overwrite_files = mocker.patch("app.file_converter.overwrite_files")
 
         window.source_is_folder = True
         window.overwrite_files = True
@@ -55,15 +55,15 @@ class TestHandleConvertClicked:
 
         window.handle_convert_clicked()
 
-        mock_convert_files.assert_called_once_with([
+        mock_overwrite_files.assert_called_once_with([
             Path("C:/Folder/Data/Sample/sample.json"),
             Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
         ],
         window.target_type,
-        make_backup = window.make_backup,
-        backup_path = window.backup_folder)
+        window.make_backup,
+        window.backup_folder)
 
     def test_source_is_folder_and_not_overwrite_calls_convert_files(self, qtbot, mocker):
         window = MainWindow()
@@ -94,14 +94,14 @@ class TestHandleConvertClicked:
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
         ],
         "json",
-        overwrite = window.overwrite_files,
-        destination_path = window.destination_folder)
+        window.destination_folder,
+        window.source_paths[0])
 
-    def test_source_is_not_folder_and_overwrite_calls_convert_files(self, qtbot, mocker):
+    def test_source_is_not_folder_and_overwrite_calls_overwrite_files(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 
-        mock_convert_files = mocker.patch("app.file_converter.convert_files")
+        mock_overwrite_files = mocker.patch("app.file_converter.overwrite_files")
 
         window.source_is_folder = False
         window.overwrite_files = True
@@ -117,7 +117,7 @@ class TestHandleConvertClicked:
 
         window.handle_convert_clicked()
 
-        mock_convert_files.assert_called_once_with(window.source_paths, window.target_type, make_backup = window.make_backup, backup_path = window.backup_folder)
+        mock_overwrite_files.assert_called_once_with(window.source_paths, window.target_type, window.make_backup, window.backup_folder)
 
     def test_source_is_not_folder_and_not_overwrite_calls_convert_files(self, qtbot, mocker):
         window = MainWindow()
@@ -138,5 +138,5 @@ class TestHandleConvertClicked:
 
         window.handle_convert_clicked()
 
-        mock_convert_files.assert_called_once_with(window.source_paths, window.target_type, overwrite = window.overwrite_files, destination_path = window.destination_folder)
+        mock_convert_files.assert_called_once_with(window.source_paths, window.target_type, window.destination_folder, None)
 
