@@ -30,12 +30,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selectBackupFolderButton.clicked.connect(self.get_backup_folder)
 
         self.include_subfolders = True
-        self.included_file_types = [".json", ".xml", ".yaml", ".yml"]
+        self.included_file_types = set()
         self.includeSubfoldersCheckBox.checkStateChanged.connect(self.__include_subfolders_state_changed)
-        self.includeAllCheckBox.checkStateChanged.connect(self.__include_all_state_changed)
-        self.includeJsonCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, (".json",)))
-        self.includeXmlCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, (".xml",)))
-        self.includeYamlCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, (".yaml", ".yml")))
+        self.includeJsonCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, {".json"}))
+        self.includeXmlCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, {".xml"}))
+        self.includeYamlCheckBox.checkStateChanged.connect(lambda state: self.__include_type_state_changed(state, {".yaml", ".yml"}))
 
         self.target_type = "json"
         self.convertToJsonRadioButton.toggled.connect(lambda: self.handle_target_type_changed("json"))
@@ -52,13 +51,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.source_paths = [Path(path) for path in result]
             self.sourceSelectionDisplay.setText(str(self.source_paths[0]))
             self.includeSubfoldersCheckBox.setEnabled(True)
-            self.includeAllCheckBox.setEnabled(True)
+            self.includeJsonCheckBox.setEnabled(True)
+            self.includeXmlCheckBox.setEnabled(True)
+            self.includeYamlCheckBox.setEnabled(True)
             self.overwriteCheckBox.setEnabled(True)
-
-            if not self.includeAllCheckBox.isChecked():
-                self.includeJsonCheckBox.setEnabled(True)
-                self.includeXmlCheckBox.setEnabled(True)
-                self.includeYamlCheckBox.setEnabled(True)
 
             self.source_is_folder = True
             self.convertButton.setEnabled(True)
@@ -70,7 +66,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             path, _ = os.path.split(self.source_paths[0])
             self.sourceSelectionDisplay.setText(f"{len(self.source_paths)} file(s) selected from '{path}'.")
             self.includeSubfoldersCheckBox.setEnabled(False)
-            self.includeAllCheckBox.setEnabled(False)
             self.includeJsonCheckBox.setEnabled(False)
             self.includeXmlCheckBox.setEnabled(False)
             self.includeYamlCheckBox.setEnabled(False)
@@ -142,37 +137,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.backupFolderLineEdit.setEnabled(False)
             self.selectBackupFolderButton.setEnabled(False)
 
-    def __include_all_state_changed(self, state):
-        self.handle_include_all_state_changed(True) if state == Qt.Checked else self.handle_include_all_state_changed(False)
-
-    def handle_include_all_state_changed(self, checked):
-        if checked:
-            self.includeJsonCheckBox.setEnabled(False)
-            self.includeXmlCheckBox.setEnabled(False)
-            self.includeYamlCheckBox.setEnabled(False)
-
-            self.included_file_types = [".json", ".xml", ".yaml", ".yml"]
-        else:
-            self.includeJsonCheckBox.setEnabled(True)
-            self.includeXmlCheckBox.setEnabled(True)
-            self.includeYamlCheckBox.setEnabled(True)
-
-            self.included_file_types = []
-            if self.includeJsonCheckBox.isChecked():
-                self.included_file_types.append(".json")
-            if self.includeXmlCheckBox.isChecked():
-                self.included_file_types.append(".xml")
-            if self.includeYamlCheckBox.isChecked():
-                self.included_file_types.extend((".yaml", ".yml"))
-
     def __include_type_state_changed(self, state, types):
         self.handle_include_type_state_changed(True, types) if state == Qt.Checked else self.handle_include_type_state_changed(False, types)
 
     def handle_include_type_state_changed(self, checked, types):
-        if checked and not set(types).issubset(self.included_file_types):
-            self.included_file_types.extend(types)
-        elif not checked:
-            self.included_file_types = [type for type in self.included_file_types if type not in types]
+        if checked:
+            self.included_file_types.update(types)
+        else:
+            self.included_file_types.difference_update(types)
 
     def handle_target_type_changed(self, type):
         self.target_type = type

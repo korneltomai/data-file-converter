@@ -19,13 +19,13 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLayout, QLineEdit,
     QListView, QMainWindow, QPushButton, QRadioButton,
     QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
-import app.rc_resources
+import rc_resources
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(732, 540)
+        MainWindow.resize(687, 500)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -120,13 +120,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.includeSubfoldersCheckBox)
 
-        self.includeAllCheckBox = QCheckBox(self.folderSettingsGroupBox)
-        self.includeAllCheckBox.setObjectName(u"includeAllCheckBox")
-        self.includeAllCheckBox.setEnabled(False)
-        self.includeAllCheckBox.setChecked(True)
-
-        self.verticalLayout_2.addWidget(self.includeAllCheckBox)
-
         self.includeJsonCheckBox = QCheckBox(self.folderSettingsGroupBox)
         self.includeJsonCheckBox.setObjectName(u"includeJsonCheckBox")
         self.includeJsonCheckBox.setEnabled(False)
@@ -170,7 +163,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.backupCheckBox)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.MinimumExpanding)
+        self.verticalSpacer = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.MinimumExpanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer)
 
@@ -305,7 +298,6 @@ class Ui_MainWindow(object):
         self.selectDestinationFolderButton.setText(QCoreApplication.translate("MainWindow", u"Select folder", None))
         self.folderSettingsGroupBox.setTitle(QCoreApplication.translate("MainWindow", u"Folder settings", None))
         self.includeSubfoldersCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include subfolders", None))
-        self.includeAllCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include all supported types", None))
         self.includeJsonCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include JSON files", None))
         self.includeXmlCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include XML files", None))
         self.includeYamlCheckBox.setText(QCoreApplication.translate("MainWindow", u"Include YAML files", None))

@@ -7,9 +7,9 @@ import pytest
 from app.mainwindow import MainWindow
 
 @pytest.mark.parametrize("types", [
-    (".json",),
-    (".xml",),
-    (".yaml", ".yml"),
+    {".json"},
+    {".xml"},
+    {".yaml", ".yml"},
 ])
 
 class TestHandleIncludeTypeStateChanged:
@@ -18,23 +18,23 @@ class TestHandleIncludeTypeStateChanged:
         window = MainWindow()
         qtbot.addWidget(window)
 
-        window.included_file_types = [".test", ".fake"]
+        window.included_file_types = {".test", ".fake"}
 
         window.handle_include_type_state_changed(True, types)
 
-        excepted_types = [".test", ".fake"]
-        excepted_types.extend(types)
+        excepted_types = {".test", ".fake"}
+        excepted_types.update(types)
         assert window.included_file_types == excepted_types
 
     def test_unchecked_removes_types(self, qtbot, types):
         window = MainWindow()
         qtbot.addWidget(window)
 
-        window.included_file_types = [".test", ".fake"]
-        window.included_file_types.extend(types)
+        window.included_file_types = {".test", ".fake"}
+        window.included_file_types.update(types)
 
         window.handle_include_type_state_changed(False, types)
 
-        assert window.included_file_types == [".test", ".fake"]
+        assert window.included_file_types == {".test", ".fake"}
 
 
