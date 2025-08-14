@@ -15,14 +15,15 @@ class TestHandleConvertClicked:
         window = MainWindow()
         qtbot.addWidget(window)
 
-        mock_func = mocker.patch("app.file_converter.get_file_paths")
-        mock_func.return_value = [
+        mock_file_converter = mocker.Mock()
+        mock_file_converter.get_file_paths.return_value = [
             Path("C:/Folder/Data/Sample/sample.json"),
             Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
         ]
 
+        window.file_converter = mock_file_converter
         window.source_is_folder = True
         window.source_paths = [Path("C:/Folder/Data/Sample/")]
         window.include_subfolders = True
@@ -30,113 +31,31 @@ class TestHandleConvertClicked:
 
         window.handle_convert_clicked()
 
-        mock_func.assert_called_once_with(window.source_paths[0], window.include_subfolders, window.included_file_types, window.console.add)
+        mock_file_converter.get_file_paths.assert_called_once_with(window.source_paths[0], window.include_subfolders, window.included_file_types)
 
-    def test_source_is_folder_and_overwrite_calls_overwrite_files(self, qtbot, mocker):
+    def test_calls_load_from_file_converter_for_each_file_path(self, qtbot, mocker):
         window = MainWindow()
         qtbot.addWidget(window)
 
-        mock_get_file_paths = mocker.patch("app.file_converter.get_file_paths")
-        mock_get_file_paths.return_value = [
+        mock_file_converter = mocker.Mock()
+        file_paths = [
             Path("C:/Folder/Data/Sample/sample.json"),
             Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
             Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
         ]
+        mock_file_converter.get_file_paths.return_value = file_paths
 
-        mock_overwrite_files = mocker.patch("app.file_converter.overwrite_files")
-
-        window.source_is_folder = True
-        window.overwrite_files = True
-        window.source_paths = [Path("C:/Folder/Data/Sample/")]
-        window.target_type = "json"
-        window.make_backup = True
-        window.backup_path = Path("C:/Folder/Data/Sample/Backup")
-
-        window.handle_convert_clicked()
-
-        mock_overwrite_files.assert_called_once_with([
-            Path("C:/Folder/Data/Sample/sample.json"),
-            Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
-        ],
-        window.target_type,
-        window.make_backup,
-        window.backup_folder)
-
-    def test_source_is_folder_and_not_overwrite_calls_convert_files(self, qtbot, mocker):
-        window = MainWindow()
-        qtbot.addWidget(window)
-
-        mock_get_file_paths = mocker.patch("app.file_converter.get_file_paths")
-        mock_get_file_paths.return_value = [
-            Path("C:/Folder/Data/Sample/sample.json"),
-            Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
-        ]
-
-        mock_convert_files = mocker.patch("app.file_converter.convert_files")
-
+        window.file_converter = mock_file_converter
         window.source_is_folder = True
         window.source_paths = [Path("C:/Folder/Data/Sample/")]
-        window.overwrite_files = False
-        window.target_type = "json"
-        window.destination_path = Path("C:/Folder/Data/Sample/Output")
+        window.include_subfolders = True
+        window.included_file_types = [".json", ".xml", ".yaml", ".yml"]
 
         window.handle_convert_clicked()
 
-        mock_convert_files.assert_called_once_with([
-            Path("C:/Folder/Data/Sample/sample.json"),
-            Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
-        ],
-        "json",
-        window.destination_folder,
-        window.source_paths[0])
+        expected_calls = [mocker.call(file_path) for file_path in file_paths]
 
-    def test_source_is_not_folder_and_overwrite_calls_overwrite_files(self, qtbot, mocker):
-        window = MainWindow()
-        qtbot.addWidget(window)
-
-        mock_overwrite_files = mocker.patch("app.file_converter.overwrite_files")
-
-        window.source_is_folder = False
-        window.overwrite_files = True
-        window.source_paths = [
-            Path("C:/Folder/Data/Sample/sample.json"),
-            Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
-        ]
-        window.target_type = "json"
-        window.make_backup = True
-        window.backup_path = Path("C:/Folder/Data/Sample/Backup")
-
-        window.handle_convert_clicked()
-
-        mock_overwrite_files.assert_called_once_with(window.source_paths, window.target_type, window.make_backup, window.backup_folder)
-
-    def test_source_is_not_folder_and_not_overwrite_calls_convert_files(self, qtbot, mocker):
-        window = MainWindow()
-        qtbot.addWidget(window)
-
-        mock_convert_files = mocker.patch("app.file_converter.convert_files")
-
-        window.source_is_folder = False
-        window.source_paths = [
-            Path("C:/Folder/Data/Sample/sample.json"),
-            Path("C:/Folder/Data/Sample/Subfolder/sample.xml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yaml"),
-            Path("C:/Folder/Data/Sample/Subfolder/Subsubfolder/sample.yml")
-        ]
-        window.overwrite_files = False
-        window.target_type = "json"
-        window.destination_path = Path("C:/Folder/Data/Sample/Output")
-
-        window.handle_convert_clicked()
-
-        mock_convert_files.assert_called_once_with(window.source_paths, window.target_type, window.destination_folder, None)
+        assert mock_file_converter.load.call_count == len(expected_calls)
+        mock_file_converter.load.assert_has_calls(expected_calls)
 

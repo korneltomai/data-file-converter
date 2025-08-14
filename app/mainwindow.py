@@ -5,7 +5,7 @@ from PySide6.QtCore import QDir, Qt
 from pathlib import Path
 from app.ui_mainwindow import Ui_MainWindow
 from app.console import Console
-import app.file_converter as file_converter
+from app.file_converter import FileConverter
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -44,6 +44,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.convertButton.clicked.connect(self.handle_convert_clicked)
 
         self.console = Console(self.consoleListView)
+        self.file_converter = FileConverter(self.console)
 
     def get_input_folder(self):
         result = self.show_file_dialog(folder_mode = True)
@@ -156,20 +157,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.include_subfolders = checked
 
     def handle_convert_clicked(self):
-        file_paths = self.source_paths if not self.source_is_folder else file_converter.get_file_paths(self.source_paths[0], self.include_subfolders, self.included_file_types, self.console.add)
+        file_paths = self.source_paths if not self.source_is_folder else self.file_converter.get_file_paths(self.source_paths[0], self.include_subfolders, self.included_file_types)
         selected_folder = self.source_paths[0] if self.source_is_folder else self.source_paths[0].parent
 
         for file_path in file_paths:
-            data = file_converter.load(file_path)
-
+            data = self.file_converter.load(file_path)
             file_name = file_path.stem
 
             if self.overwrite_files:
-                #file_path.unlink(True)
-                file_converter.dump(data, file_path.parent, file_name, self.target_type)
+                file_path.unlink(True)
+                self.file_converter.dump(data, file_path.parent, file_name, self.target_type)
                 if self.make_backup:
                     rel_file_path = os.path.relpath(file_path, selected_folder)
-                    file_converter.dump(data, self.backup_folder.joinpath(rel_file_path).parent, file_name, self.target_type)
+                    self.file_converter.dump(data, self.backup_folder.joinpath(rel_file_path).parent, file_name, self.target_type)
             else:
                 rel_file_path = os.path.relpath(file_path, selected_folder)
-                file_converter.dump(data, self.destination_folder.joinpath(rel_file_path).parent, file_name, self.target_type)
+                self.file_converter.dump(data, self.destination_folder.joinpath(rel_file_path).parent, file_name, self.target_type)

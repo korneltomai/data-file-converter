@@ -5,7 +5,7 @@ sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/../.."))
 
 import pytest
 from pathlib import Path
-import app.file_converter as file_converter
+from app.file_converter import FileConverter
 
 @pytest.fixture
 def files():
@@ -81,10 +81,11 @@ class TestGetFilePaths:
     ])
 
     def test_gets_files(self, mocker, files, included_types, include_subfolders, expected_file_paths):
-        mock_glob = mocker.patch("app.file_converter.Path.glob")
-        mock_glob.return_value = files
+        mock_console = mocker.Mock()
+        file_converter = FileConverter(mock_console)
+        mocker.patch("app.file_converter.Path.glob", return_value = files)
 
-        result = file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), include_subfolders, included_types, lambda t: t)
+        result = file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), include_subfolders, included_types)
 
         assert result == expected_file_paths
 
@@ -93,15 +94,14 @@ class TestGetFilePaths:
         (False, f"Searching for ['.json'] files in '{Path('C:/Folder/Data/Sample')}'...")
     ])
 
-    def test_calls_print_before_searhing(self, mocker, include_subfolders, message):
-        mock_glob = mocker.patch("app.file_converter.Path.glob")
-        mock_glob.return_value = [Path('C:/Folder/Data/Sample/sample.json')]
+    def test_adds_message_to_console_before_searhing(self, mocker, include_subfolders, message):
+        mock_console = mocker.Mock()
+        file_converter = FileConverter(mock_console)
+        mocker.patch("app.file_converter.Path.glob", return_value = [Path('C:/Folder/Data/Sample/sample.json')])
 
-        mock_print = mocker.patch("app.console.Console.add")
+        file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), include_subfolders, [".json"])
 
-        file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), include_subfolders, [".json"], mock_print)
-
-        mock_print.assert_any_call(message)
+        mock_console.add.assert_any_call(message)
 
     @pytest.mark.parametrize("found_files, message", [
         ([], "0 files found."),
@@ -109,14 +109,13 @@ class TestGetFilePaths:
         ([Path('C:/Folder/Data/Sample/sample.json'), Path('C:/Folder/Data/Sample/Subfolder/sample2.json')], "2 files found.")
     ])
 
-    def test_calls_print_after_searching(self, mocker, found_files, message):
-        mock_glob = mocker.patch("app.file_converter.Path.glob")
-        mock_glob.return_value = found_files
+    def test_adds_message_to_console_after_searching(self, mocker, found_files, message):
+        mock_console = mocker.Mock()
+        file_converter = FileConverter(mock_console)
+        mocker.patch("app.file_converter.Path.glob", return_value = found_files)
 
-        mock_print = mocker.patch("app.console.Console.add")
+        file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), True, [".json"])
 
-        file_converter.get_file_paths(Path("C:/Folder/Data/Sample"), True, [".json"], mock_print)
-
-        mock_print.assert_any_call(message)
+        mock_console.add.assert_any_call(message)
 
 
