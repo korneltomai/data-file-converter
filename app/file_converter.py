@@ -5,16 +5,6 @@ import json
 import yaml
 import xmltodict
 
-def convert_files(file_paths, target_type, destination_path, parent_folder):
-    for file_path in file_paths:
-        data = _load_file(file_path)
-        print(data)
-
-def overwrite_files(file_paths, target_type, make_backup, backup_path):
-    for file_path in file_paths:
-        data = _load_file(file_path)
-        print(data)
-
 def get_file_paths(folder_path, include_subfolders, included_file_types, add_console_message):
     add_console_message(f"Searching for {included_file_types} files in '{folder_path}' and subfolders...") if include_subfolders else add_console_message(f"Searching for {included_file_types} files in '{folder_path}'...")
 
@@ -28,7 +18,7 @@ def get_file_paths(folder_path, include_subfolders, included_file_types, add_con
 
     return file_paths
 
-def _load_file(file_path):
+def load(file_path):
     extension = file_path.suffix
     with open(file_path, 'rb') as file:
         if extension == ".json":
@@ -37,3 +27,9 @@ def _load_file(file_path):
             return xmltodict.parse(file)
         if extension in {".yaml", ".yml"}:
             return yaml.safe_load(file)
+
+def dump(data, target_folder, file_name, target_type):
+    full_file_name = f"{file_name}.{target_type}"
+    full_path = target_folder.joinpath(Path(full_file_name))
+    print(full_path)
+
