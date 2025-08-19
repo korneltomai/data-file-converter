@@ -20,6 +20,15 @@ class TestLoad:
 
         mock_open.assert_called_once_with(mock_file_path, "rb")
 
+    def test_when_open_throws_file_not_found_error_writes_to_console(self, mocker):
+        mock_console = mocker.Mock()
+        file_converter = FileConverter(mock_console)
+        mocker.patch("builtins.open", side_effect=FileNotFoundError())
+        mock_file_path = Path("C:/Folder/Data/Sample/sample.json");
+
+        file_converter.load(mock_file_path)
+        mock_console.add.assert_called_once_with(f"[IGNORED]: File '{str(mock_file_path)}' not found.")
+
     def test_calls_load_from_json(self, mocker):
         mock_console = mocker.Mock()
         file_converter = FileConverter(mock_console)

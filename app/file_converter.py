@@ -24,13 +24,16 @@ class FileConverter():
 
     def load(self, file_path):
         extension = file_path.suffix
-        with open(file_path, 'rb') as file:
-            if extension == ".json":
-                return json.load(file)
-            if extension == ".xml":
-                return xmltodict.parse(file)
-            if extension in {".yaml", ".yml"}:
-                return yaml.safe_load(file)
+        try:
+            with open(file_path, 'rb') as file:
+                if extension == ".json":
+                    return json.load(file)
+                if extension == ".xml":
+                    return xmltodict.parse(file)
+                if extension in {".yaml", ".yml"}:
+                    return yaml.safe_load(file)
+        except FileNotFoundError:
+            self.console.add(f"[IGNORED]: File '{str(file_path)}' not found.");
 
     def dump(self, data, target_folder, file_name, target_type):
         full_file_name = f"{file_name}.{target_type}"
