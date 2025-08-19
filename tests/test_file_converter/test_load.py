@@ -24,19 +24,19 @@ class TestLoad:
         mock_console = mocker.Mock()
         file_converter = FileConverter(mock_console)
         mocker.patch("builtins.open", side_effect=FileNotFoundError())
-        mock_file_path = Path("C:/Folder/Data/Sample/sample.json");
+        file_path = Path("C:/Folder/Data/Sample/sample.json");
 
-        file_converter.load(mock_file_path)
-        mock_console.add.assert_called_once_with(f"[IGNORED]: File '{str(mock_file_path)}' not found.")
+        file_converter.load(file_path)
+        mock_console.add.assert_called_once_with(f"[IGNORED]: Couldn't load file '{str(file_path)}', because it doesn't exists.")
 
     def test_calls_load_from_json(self, mocker):
         mock_console = mocker.Mock()
         file_converter = FileConverter(mock_console)
         mocker.patch("builtins.open", mocker.mock_open())
         mock_load = mocker.patch("app.file_converter.json.load")
-        mock_file_path = Path("C:/Folder/Data/Sample/sample.json");
+        file_path = Path("C:/Folder/Data/Sample/sample.json");
 
-        result = file_converter.load(mock_file_path)
+        result = file_converter.load(file_path)
 
         mock_load.assert_called_once()
 
@@ -45,9 +45,9 @@ class TestLoad:
         file_converter = FileConverter(mock_console)
         mocker.patch("builtins.open", mocker.mock_open())
         mock_load = mocker.patch("app.file_converter.xmltodict.parse")
-        mock_file_path = Path("C:/Folder/Data/Sample/sample.xml");
+        file_path = Path("C:/Folder/Data/Sample/sample.xml");
 
-        result = file_converter.load(mock_file_path)
+        result = file_converter.load(file_path)
 
         mock_load.assert_called_once()
 
@@ -56,9 +56,9 @@ class TestLoad:
         file_converter = FileConverter(mock_console)
         mocker.patch("builtins.open", mocker.mock_open())
         mock_load = mocker.patch("app.file_converter.yaml.load")
-        mock_file_path = Path("C:/Folder/Data/Sample/sample.yaml");
+        file_path = Path("C:/Folder/Data/Sample/sample.yaml");
 
-        result = file_converter.load(mock_file_path)
+        result = file_converter.load(file_path)
 
         mock_load.assert_called_once()
 

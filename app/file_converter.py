@@ -33,7 +33,7 @@ class FileConverter():
                 if extension in {".yaml", ".yml"}:
                     return yaml.safe_load(file)
         except FileNotFoundError:
-            self.console.add(f"[IGNORED]: File '{str(file_path)}' not found.");
+            self.console.add(f"[IGNORED]: Couldn't load file '{str(file_path)}', because it doesn't exists.");
 
     def dump(self, data, target_folder, file_name, target_type):
         full_file_name = f"{file_name}.{target_type}"
