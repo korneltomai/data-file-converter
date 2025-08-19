@@ -165,7 +165,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             file_name = file_path.stem
 
             if self.overwrite_files:
-                file_path.unlink(True)
+                #file_path.unlink(True)
                 self.file_converter.dump(data, file_path.parent, file_name, self.target_type)
                 if self.make_backup:
                     rel_file_path = os.path.relpath(file_path, selected_folder)
