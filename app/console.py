@@ -11,3 +11,7 @@ class Console:
     def add(self, message):
         self.model.messages.append(message)
         self.model.layoutChanged.emit()
+
+    def add_convert_seperator(self):
+        self.model.messages.append(f"{'-' * 20} BEGIN CONVERTING {'-' * 20}")
+        self.model.layoutChanged.emit()

@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
 from pathlib import Path
+import os
 import json
 import yaml
 import xmltodict
@@ -18,7 +19,7 @@ class FileConverter():
         else:
             file_paths = list(filter(lambda path: path.suffix in included_file_types, folder_path.glob("*")))
 
-        self.console.add(f"{len(file_paths)} files found.")
+        self.console.add(f"[SUCCESS]: {len(file_paths)} files found.")
 
         return file_paths
 
@@ -26,17 +27,36 @@ class FileConverter():
         extension = file_path.suffix
         try:
             with open(file_path, 'rb') as file:
+                data = {}
                 if extension == ".json":
-                    return json.load(file)
+                    data = json.load(file)
                 if extension == ".xml":
-                    return xmltodict.parse(file)
+                    data = xmltodict.parse(file)
                 if extension in {".yaml", ".yml"}:
-                    return yaml.safe_load(file)
+                    data = yaml.safe_load(file)
+
+                self.console.add(f"[SUCCESS]: Loaded file '{str(file_path)}'.");
+                return data;
         except FileNotFoundError:
             self.console.add(f"[IGNORED]: Couldn't load file '{str(file_path)}', because it doesn't exists.");
+
 
     def dump(self, data, target_folder, file_name, target_type):
         full_file_name = f"{file_name}.{target_type}"
         full_path = target_folder.joinpath(Path(full_file_name))
-        print(full_path)
+
+        target_folder.mkdir(parents=True, exist_ok=True)
+        try:
+            with open(full_path, 'w') as file:
+                if target_type == "json":
+                    json.dump(data, file, indent=4, ensure_ascii=False)
+                if target_type == "xml":
+                    xmltodict.unparse(data, file, pretty=True)
+                if target_type == "yaml":
+                    yaml.dump(data, file, default_flow_style=False, indent=4)
+                self.console.add(f"[SUCCESS]: Saved '{full_file_name}' file to '{str(target_folder)}'.");
+        except ValueError:
+            self.console.add(f"[IGNORED]: Couldn't convert file '{file_name}' to xml, because it has more than one roots.")
+            full_path.unlink(True)
+
 

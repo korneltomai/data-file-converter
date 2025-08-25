@@ -104,9 +104,9 @@ class TestGetFilePaths:
         mock_console.add.assert_any_call(message)
 
     @pytest.mark.parametrize("found_files, message", [
-        ([], "0 files found."),
-        ([Path('C:/Folder/Data/Sample/sample.json')], "1 files found."),
-        ([Path('C:/Folder/Data/Sample/sample.json'), Path('C:/Folder/Data/Sample/Subfolder/sample2.json')], "2 files found.")
+        ([], "[SUCCESS]: 0 files found."),
+        ([Path('C:/Folder/Data/Sample/sample.json')], "[SUCCESS]: 1 files found."),
+        ([Path('C:/Folder/Data/Sample/sample.json'), Path('C:/Folder/Data/Sample/Subfolder/sample2.json')], "[SUCCESS]: 2 files found.")
     ])
 
     def test_adds_message_to_console_after_searching(self, mocker, found_files, message):

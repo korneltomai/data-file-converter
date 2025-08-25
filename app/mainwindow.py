@@ -157,6 +157,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.include_subfolders = checked
 
     def handle_convert_clicked(self):
+        self.console.add_convert_seperator()
         file_paths = self.source_paths if not self.source_is_folder else self.file_converter.get_file_paths(self.source_paths[0], self.include_subfolders, self.included_file_types)
         selected_folder = self.source_paths[0] if self.source_is_folder else self.source_paths[0].parent
 
