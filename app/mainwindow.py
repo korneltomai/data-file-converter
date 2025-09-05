@@ -162,9 +162,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         selected_folder = self.source_paths[0] if self.source_is_folder else self.source_paths[0].parent
 
         for file_path in file_paths:
-            data = self.file_converter.load(file_path)
-            file_name = file_path.stem
+            try:
+                data = self.file_converter.load(file_path)
+            except FileNotFoundError:
+                self.console.add(f"[IGNORED]: Couldn't load file '{str(file_path)}', because it doesn't exists.");
+                continue;
 
+            file_name = file_path.stem
             if self.overwrite_files:
                 #file_path.unlink(True)
                 self.file_converter.dump(data, file_path.parent, file_name, self.target_type)

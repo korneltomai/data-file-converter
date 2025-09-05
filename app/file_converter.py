@@ -25,20 +25,18 @@ class FileConverter():
 
     def load(self, file_path):
         extension = file_path.suffix
-        try:
-            with open(file_path, 'rb') as file:
-                data = {}
-                if extension == ".json":
-                    data = json.load(file)
-                if extension == ".xml":
-                    data = xmltodict.parse(file)
-                if extension in {".yaml", ".yml"}:
-                    data = yaml.safe_load(file)
+        with open(file_path, 'rb') as file:
+            data = {}
+            if extension == ".json":
+                data = json.load(file)
+            if extension == ".xml":
+                data = xmltodict.parse(file)
+            if extension in {".yaml", ".yml"}:
+                data = yaml.safe_load(file)
 
-                self.console.add(f"[SUCCESS]: Loaded file '{str(file_path)}'.");
-                return data;
-        except FileNotFoundError:
-            self.console.add(f"[IGNORED]: Couldn't load file '{str(file_path)}', because it doesn't exists.");
+            self.console.add(f"[SUCCESS]: Loaded file '{str(file_path)}'.");
+            return data;
+
 
 
     def dump(self, data, target_folder, file_name, target_type):

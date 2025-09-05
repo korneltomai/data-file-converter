@@ -85,21 +85,6 @@ class TestDump:
 
         mock_dump.assert_called_once()
 
-    def test_writes_to_console_when_unparse_from_xmltodict_throws_value_error(self, mocker):
-        mock_console = mocker.Mock()
-        file_converter = FileConverter(mock_console)
-        mocker.patch("builtins.open", mocker.mock_open())
-        mock_dump = mocker.patch("app.file_converter.xmltodict.unparse", side_effect=ValueError())
-
-        data = {"data": 10}
-        target_folder = Path("C:/Folder/Data/Sample")
-        file_name = "sample"
-        target_type = "xml"
-
-        file_converter.dump(data, target_folder, file_name, target_type)
-
-        mock_console.add.assert_called_once()
-
     def test_removes_empty_file_when_unparse_from_xmltodict_throws_value_error(self, mocker):
         mock_console = mocker.Mock()
         file_converter = FileConverter(mock_console)
@@ -116,6 +101,21 @@ class TestDump:
         file_converter.dump(data, target_folder, file_name, target_type)
 
         mock_unlink.assert_called_once_with(full_path, True)
+
+    def test_writes_to_console_when_unparse_from_xmltodict_throws_value_error(self, mocker):
+        mock_console = mocker.Mock()
+        file_converter = FileConverter(mock_console)
+        mocker.patch("builtins.open", mocker.mock_open())
+        mock_dump = mocker.patch("app.file_converter.xmltodict.unparse", side_effect=ValueError())
+
+        data = {"data": 10}
+        target_folder = Path("C:/Folder/Data/Sample")
+        file_name = "sample"
+        target_type = "xml"
+
+        file_converter.dump(data, target_folder, file_name, target_type)
+
+        mock_console.add.assert_called_once()
 
     def test_calls_dump_from_yaml(self, mocker):
         mock_console = mocker.Mock()

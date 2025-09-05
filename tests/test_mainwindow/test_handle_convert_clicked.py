@@ -58,4 +58,3 @@ class TestHandleConvertClicked:
 
         assert mock_file_converter.load.call_count == len(expected_calls)
         mock_file_converter.load.assert_has_calls(expected_calls)
-
