@@ -28,9 +28,9 @@ class FileConverter():
             data = {}
             if extension == ".json":
                 data = json.load(file)
-            if extension == ".xml":
+            elif extension == ".xml":
                 data = xmltodict.parse(file)
-            if extension in {".yaml", ".yml"}:
+            elif extension in {".yaml", ".yml"}:
                 data = yaml.safe_load(file)
 
             self.console.add(f"[SUCCESS]: Loaded file '{str(file_path)}'.");
@@ -47,9 +47,9 @@ class FileConverter():
             with open(full_path, 'w') as file:
                 if target_type == "json":
                     json.dump(data, file, indent=4, ensure_ascii=False)
-                if target_type == "xml":
+                elif target_type == "xml":
                     xmltodict.unparse(data, file, pretty=True)
-                if target_type == "yaml":
+                elif target_type == "yaml":
                     yaml.dump(data, file, default_flow_style=False, indent=4)
                 self.console.add(f"[SUCCESS]: Saved '{full_file_name}' file to '{str(target_folder)}'.");
         except ValueError:
