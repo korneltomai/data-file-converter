@@ -1,7 +1,6 @@
 # This Python file uses the following encoding: utf-8
 
 from pathlib import Path
-import os
 import json
 import yaml
 import xmltodict

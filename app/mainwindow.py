@@ -25,16 +25,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selectSourceFilesButton.clicked.connect(self.get_input_files)
         self.selectDestinationFolderButton.clicked.connect(self.get_output_folder)
 
-        self.overwriteCheckBox.checkStateChanged.connect(self._overwrite_state_changed)
-        self.backupCheckBox.checkStateChanged.connect(self._backup_state_changed)
+        self.overwriteCheckBox.checkStateChanged.connect(self.overwrite_state_changed)
+        self.backupCheckBox.checkStateChanged.connect(self.backup_state_changed)
         self.selectBackupFolderButton.clicked.connect(self.get_backup_folder)
 
         self.include_subfolders = True
         self.included_file_types = set()
-        self.includeSubfoldersCheckBox.checkStateChanged.connect(self._include_subfolders_state_changed)
-        self.includeJsonCheckBox.checkStateChanged.connect(lambda state: self._include_type_state_changed(state, {".json"}))
-        self.includeXmlCheckBox.checkStateChanged.connect(lambda state: self._include_type_state_changed(state, {".xml"}))
-        self.includeYamlCheckBox.checkStateChanged.connect(lambda state: self._include_type_state_changed(state, {".yaml", ".yml"}))
+        self.includeSubfoldersCheckBox.checkStateChanged.connect(self.include_subfolders_state_changed)
+        self.includeJsonCheckBox.checkStateChanged.connect(lambda state: self.include_type_state_changed(state, {".json"}))
+        self.includeXmlCheckBox.checkStateChanged.connect(lambda state: self.include_type_state_changed(state, {".xml"}))
+        self.includeYamlCheckBox.checkStateChanged.connect(lambda state: self.include_type_state_changed(state, {".yaml", ".yml"}))
 
         self.target_type = "json"
         self.convertToJsonRadioButton.toggled.connect(lambda: self.handle_target_type_changed("json"))
@@ -100,7 +100,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if dialog.exec():
             return dialog.selectedFiles()
 
-    def _overwrite_state_changed(self, state):
+    def overwrite_state_changed(self, state):
         self.handle_overwrite_state_changed(True) if state == Qt.Checked else self.handle_overwrite_state_changed(False)
 
     def handle_overwrite_state_changed(self, checked):
@@ -123,7 +123,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.destinationFolderLineEdit.setEnabled(True)
             self.selectDestinationFolderButton.setEnabled(True)
 
-    def _backup_state_changed(self, state):
+    def backup_state_changed(self, state):
         self.handle_backup_state_changed(True) if state == Qt.Checked else self.handle_backup_state_changed(False)
 
     def handle_backup_state_changed(self, checked):
@@ -138,7 +138,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.backupFolderLineEdit.setEnabled(False)
             self.selectBackupFolderButton.setEnabled(False)
 
-    def _include_type_state_changed(self, state, types):
+    def include_type_state_changed(self, state, types):
         self.handle_include_type_state_changed(True, types) if state == Qt.Checked else self.handle_include_type_state_changed(False, types)
 
     def handle_include_type_state_changed(self, checked, types):
@@ -150,7 +150,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def handle_target_type_changed(self, type):
         self.target_type = type
 
-    def _include_subfolders_state_changed(self, state):
+    def include_subfolders_state_changed(self, state):
         self.handle_include_subfolders_state_changed(True) if state == Qt.Checked else self.handle_include_subfolders_state_changed(False)
 
     def handle_include_subfolders_state_changed(self, checked):
@@ -170,11 +170,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             file_name = file_path.stem
             if self.overwrite_files:
-                #file_path.unlink(True)
+                file_path.unlink(True)
                 self.file_converter.dump(data, file_path.parent, file_name, self.target_type)
                 if self.make_backup:
                     rel_file_path = os.path.relpath(file_path, selected_folder)
-                    self.file_converter.dump(data, self.backup_folder.joinpath(rel_file_path).parent, file_name, self.target_type)
+                    self.file_converter.dump(data, self.backup_folder.joinpath(rel_file_path).parent, file_name, file_path.suffix)
             else:
                 rel_file_path = os.path.relpath(file_path, selected_folder)
                 self.file_converter.dump(data, self.destination_folder.joinpath(rel_file_path).parent, file_name, self.target_type)
